@@ -1,0 +1,270 @@
+.UserRegister{
+    
+   
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+   
+    color: white;
+    background-color: #03A66A;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 300px;
+    padding: 80px;
+    width: 500px;
+    height: 500px;
+    
+    font-family: 'Roboto Slab'; 
+    font-size: 25px; 
+    align-items: center;
+    color:white;
+}
+.UserRegister h1{
+    color:white;
+    font-family: 'Roboto Slab';
+    font-weight: 300;
+    margin-top: 50px;
+    font-size: 40px;
+    font-weight: 500;
+   
+}
+
+
+.UserLogin{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 98%;
+    height:50px;
+}
+.UserLogin svg{
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.UserLogin input{
+    background: transparent;
+    width: 100%;
+    outline-width: 0;
+    color: #177359;
+    border: none;
+    font-size: 17px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.UserName{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 98%;
+    height:50px;
+
+}
+.UserName svg{
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.UserName input{
+   
+    background: transparent;
+    width: 100%;
+    outline-width: 0;
+    color:#177359;
+    border: none;
+    font-size: 17px;
+    margin-left: 12px;
+    margin-right: 10px;
+   
+}
+.UserDepartament{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 98%;
+    height:50px;
+}
+
+.UserDepartament svg{
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.UserDepartament input{
+    background: transparent;
+    width: 100%;
+    outline-width: 0;
+    color:#177359;
+    border: none;
+    font-size: 17px;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+.UserEmail{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 98%;
+    height:50px;
+}
+
+.UserEmail svg{
+    margin-left: 10px;
+    font-size: 25px;
+}
+.UserEmail input{
+    background: transparent;
+    width: 100%;
+    outline-width: 0;
+    color:#177359;
+    border: none;
+    font-size: 17px;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+.UserPassword{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 98%;
+    height:50px;
+}
+
+.UserPassword svg{
+    margin-left: 10px;
+    font-size: 25px;
+}
+.UserPassword input{
+    background: transparent;
+    width: 100%;
+    outline-width: 0;
+    color:#177359;
+    border: none;
+    font-size: 17px;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+
+.UserStatus{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 98%;
+    height:50px;
+}
+.UserStatus svg{
+    margin-left: 10px;
+    font-size: 25px;
+}
+ 
+.UserStatus select{
+    background: transparent;
+    width: 100%;
+    outline-width: 0;
+    color:#177359;
+    border: none;
+    font-size: 17px;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+.UserAcess{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 98%;
+    height:50px;
+}
+
+.UserAcess svg{
+    margin-left: 10px;
+    font-size: 25px;
+}
+.UserAcess select{
+    background: transparent;
+    width: 100%;
+    outline-width: 0;
+    color:#177359;
+    border: none;
+    font-size: 17px;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+.UserSave svg{
+    margin-left: 10px;
+    font-size: 50px;
+}
+.UserSave button{
+    display: flex;
+    align-items: center;
+    color: #177359;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 150px;
+    height:50px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.UserSave button:hover{
+    background-color:#177359;
+    color:white;
+    cursor:pointer;
+}
+
+.UseCancel svg{
+    margin-left: 10px;
+    font-size: 50px;
+}
+.UserCancel button{
+    display: flex;
+    align-items: center;
+    color: red;
+    background-color:white;
+    border-radius: 5px;
+    padding: 3px;
+    width: 150px;
+    height:50px;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.UserCancel button:hover{
+    background-color:red;
+    color:white;
+    cursor:pointer;
+}
+

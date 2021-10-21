@@ -1,0 +1,8 @@
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.logo-safra40{
+    width: 100px;
+}   

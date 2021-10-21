@@ -1,0 +1,7 @@
+.side-bar{
+    height: 85vh;
+    position: fixed;
+    width: 230px;
+    background-color: red;
+    padding: 10px;
+}
