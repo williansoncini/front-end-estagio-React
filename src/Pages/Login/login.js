@@ -3,20 +3,34 @@ import './login.css'
 import SubmitButton from '../components/button/submitButton/button'
 import { Icon } from '@iconify/react'
 import Logo from '../components/logo/logo'
-import singIn from '../services/auth/authService'
+import SingIn from '../services/auth/authService'
 import { useAuth } from '../providers/authProvider'
+import { useHistory, Link } from 'react-router-dom';
 
 const Login = function(){
-    const {email, setEmail} = useAuth()
-    console.log(email)
-    // const [email, setEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { setUser } = useAuth();
+    // const history = useHistory();
 
-    async function clickSingIn(e){
-        const emailChange = email
-        localStorage.setItem('email',JSON.stringify(emailChange))
-        setEmail(emailChange.name)
-        // return await singIn(email, password)
+    async function ClickSingIn(e){
+        try {
+            const response = await SingIn(email, password)
+            if (response.status !== 200){
+                console.log(response.data.error)
+                return false
+            }
+            else{
+                console.log(response)
+                localStorage.setItem('user',JSON.stringify(response.data.user))
+                setUser(response.data.user)
+                console.log('aqui')
+                
+                // history.push('./home')
+        }
+        } catch (error) {
+            alert('Erro na api')
+        }
     }
 
     return (
@@ -27,14 +41,14 @@ const Login = function(){
                     <div>
                         <div className='container'>
                             <Icon icon="bx:bxs-user" color="#212621"/>
-                            <input type="text" name="login" id="login" placeholder='Login' className='input-text' value={email.name} onChange={(event) => setEmail({name:event.target.value})}/>
+                            <input type="text" name="login" id="login" placeholder='Login' className='input-text' value={email} onChange={(event) => setEmail(event.target.value)}/>
                         </div>
                         <div className='container'>
                             <Icon icon="fluent:key-16-filled" color="#212621"/>
                             <input type="password" name="senha" id="senha" placeholder='Senha' className='input-text' value={password} onChange={(event) => setPassword(event.target.value)}/>
                         </div>
                         <div className='buttons'>
-                            <SubmitButton text='Entrar' name='teste' script={clickSingIn}/>
+                            <Link to="/home"><SubmitButton text='Entrar' name='teste' script={ClickSingIn}/> </Link>
                         </div>
                     </div>
                 </form>

@@ -1,17 +1,29 @@
-import react from "react";
 import './sideMenuStyle.css'
+import { Icon } from '@iconify/react'
+import Logo from '../logo/logo';
 
-const SideMenu = function(){
+const SideBar = function(){
     return (
         <div className='side-bar'>
-            <ul>
-                <li><button>teste</button></li>
-                <li><button>teste</button></li>
-                <li><button>teste</button></li>
-                <li><button>teste</button></li>
-            </ul>
+            <div className='first-bar'>
+                <Icon icon="carbon:home" color="white" width="36" height="34" className='itens-first-bar'/>
+                <Icon icon="majesticons:file-report-line" color="white" width="36" height="34" className='itens-first-bar'/>
+                <Icon icon="carbon:user-filled" color="white" width="36" height="34" className='itens-first-bar'/>
+                <Icon icon="carbon:document" color="white" width="36" height="34" className='itens-first-bar'/>
+            </div>
+            <div className='second-bar'>
+                <div className='second-bar-logo'>
+                    <Logo/>
+                </div>
+                <div className='second-bar-container-itens'>
+                    <span className='second-bar-itens'> Relatório teste teste</span>
+                    <span className='second-bar-itens'> Relatório teste teste</span>
+                    <span className='second-bar-itens'> Relatório teste teste</span>
+                    <span className='second-bar-itens'> Relatório teste teste</span>
+                </div>
+            </div>
         </div>
     )
 }
 
-export default SideMenu;
+export default SideBar;

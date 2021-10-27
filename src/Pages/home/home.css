@@ -1,0 +1,11 @@
+.padding-menu{
+    display: flex;
+    padding-left: 220px;
+    /* width: 100%; */
+    /* height: 100%; */
+}
+
+.home{
+    background-color: brown;
+    border: cadetblue solid 3px;
+}

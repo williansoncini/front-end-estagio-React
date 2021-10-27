@@ -9,7 +9,7 @@
 .menu-login{
     padding: 20px;
     position: absolute;
-    width: 200px;
+    width: 280px;
     /* height: 225px; */
     display: flex;
     background: #FFFFFF;
@@ -24,7 +24,7 @@
     font-family: inherit;
     padding: 0;
     height: 30px;
-    font-size: 10px;
+    font-size: 16px;
     font-weight: 500;
     background: none;
     border-radius: 0;

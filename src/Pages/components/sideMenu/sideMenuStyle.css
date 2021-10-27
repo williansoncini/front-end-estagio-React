@@ -1,7 +1,62 @@
 .side-bar{
-    height: 85vh;
+    height: 100vh;
     position: fixed;
     width: 230px;
-    background-color: red;
+    display: flex;
+    flex-direction: row;
+}
+
+.first-bar{
+    width: 50px;
+    height: 100vh;
+    background-color: #177359;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.itens-first-bar{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.itens-first-bar:hover{
+    background-color: rgba(255,255,255,0.25);
+}
+
+.second-bar{
+    width: 180px;
+    background-color: #03A66A;
+    display: flex;
+    flex-direction: column;
+}
+
+.second-bar-logo{
+    background-color: white;
     padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.second-bar-container-itens{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.second-bar-itens{
+   width: 80%;
+   color: white;
+   padding: 30px 10px 30px 10px;
+   font-size: 14;
+   cursor: pointer;
+}
+
+.second-bar-itens:hover{
+    background-color: rgba(255,255,255,0.25);
 }

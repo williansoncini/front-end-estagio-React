@@ -3,23 +3,20 @@ import React, {useEffect, useState} from "react";
 export const AuthContext = React.createContext({})
 
 export const AuthProvider = (props) => {
-    const [email, setEmail] = useState({
-        name:''
-    })
+    const [user, setUser] = useState({user:{}})
 
     useEffect(() => {
-        const emailStorage = localStorage.getItem('email')
-        console.log(emailStorage)
-        if (emailStorage)
-            setEmail(JSON.parse(emailStorage))
+        const userStorage = localStorage.getItem('user')
+        if (userStorage)
+        setUser(JSON.parse(userStorage))
         else
-            setEmail({
-                name: ''
+        setUser({
+                user: {}
             })
     }, [])
 
     return (
-        <AuthContext.Provider value={{email, setEmail}}>
+        <AuthContext.Provider value={{user, setUser}}>
             {props.children}
         </AuthContext.Provider>
     )

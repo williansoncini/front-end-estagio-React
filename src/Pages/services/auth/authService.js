@@ -1,10 +1,9 @@
 import axios from 'axios'
 
-const singIn = async function(email, password){
+const SingIn = async function(email, password){
     let status = 0
-    let responseSuccess = {}
-    let responseError = {}
-    let token = ''
+    let responseSuccess 
+    let responseError
 
     await axios.post('http://localhost:3000/login/',{},{
             auth:{
@@ -14,19 +13,26 @@ const singIn = async function(email, password){
         }
     ).then(function (response){
         status = response.status
-
         if (status === 200){
-            token = response.data.user.token
-            responseSuccess = response.data.sucess
-            return({
-                'response':responseSuccess,
-                'token':token
-            })
+            responseSuccess = {
+                'status':status,
+                'data':response.data
+            }
         }
     }).catch(function (error){
-        responseError = error.response.data.error
-        return console.log(responseError)
+        responseError = {
+            'status': error.response.status,
+            'data': error.response.data
+        }
     })
+
+    // console.log(responseSuccess)
+    // console.log(responseError)
+
+    if (responseSuccess)
+        return responseSuccess
+    else
+        return responseError
 }
 
-export default singIn
+export default SingIn
