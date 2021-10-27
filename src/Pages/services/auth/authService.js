@@ -35,4 +35,12 @@ const SingIn = async function(email, password){
         return responseError
 }
 
-export default SingIn
+export {SingIn}
+
+const getTokenFromLocalStorage = function(){
+    const user = JSON.parse(localStorage.getItem('user'))
+    const token = user.token
+    return token
+}
+
+export {getTokenFromLocalStorage}

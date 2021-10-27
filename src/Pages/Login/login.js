@@ -3,7 +3,7 @@ import './login.css'
 import SubmitButton from '../components/button/submitButton/button'
 import { Icon } from '@iconify/react'
 import Logo from '../components/logo/logo'
-import SingIn from '../services/auth/authService'
+import {SingIn} from '../services/auth/authService'
 import { useAuth } from '../providers/authProvider'
 import { useHistory, Link } from 'react-router-dom';
 
@@ -24,9 +24,6 @@ const Login = function(){
                 console.log(response)
                 localStorage.setItem('user',JSON.stringify(response.data.user))
                 setUser(response.data.user)
-                console.log('aqui')
-                
-                // history.push('./home')
         }
         } catch (error) {
             alert('Erro na api')

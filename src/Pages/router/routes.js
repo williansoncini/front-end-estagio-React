@@ -3,6 +3,7 @@ import React from 'react'
 import { Switch, Route } from "react-router-dom";
 import Home from '../home/home'
 import Login from '../Login/login'
+import { getTokenFromLocalStorage } from '../services/auth/authService';
 import UsersList from '../Users/home/usersList';
 
 const Routes = function (){
@@ -23,15 +24,10 @@ const Routes = function (){
         }
     }
 
-    function getTokenFromLocalStorage(){
-        const user = JSON.parse(localStorage.getItem('user'))
-        const token = user.token
-        return token
-    }
     return(
         <Switch>
+            <Route exact path='/'>  <Home/> </Route>
             <Route exact path='/login'> <Login/>  </Route>
-            <Route exact path='/home'>  <Home/> </Route>
             <Route exact path='/users'>  <UsersList/> </Route>
             {/* <Route exact path='/login'> {authenticated?<Home/>:<Login/>}  </Route>
             <Route exact path='/home'>  {authenticated?<Home/>:<Login/>}  </Route> */}

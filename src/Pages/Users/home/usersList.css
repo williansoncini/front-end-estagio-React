@@ -1,12 +1,51 @@
-
-.container{
-    padding: 20px;
+.content-container{
     display: flex;
     flex-direction: column;
+    margin-left: 230px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    overflow: hidden;
 }
 
 .header{
     display: flex;
     flex-direction: row;
     padding: 10px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.buttons-container{
+    display: flex;
+    justify-content: end;
+}
+
+.button{
+    background-color: white;
+    display: inline-flex;
+    border: white solid 2px;
+    align-items: center;
+    font-size: 18;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0px 3px 3px rgba(000, 000, 000, 0.4);   
+    margin: 0px 10px 0px 10px;
+    cursor: pointer;
+}
+
+.button:hover{
+    border: royalblue solid 2px;
+}
+
+.filter-button{
+    color: black;
+}
+
+.add-button{
+    color: #177359;
+}
+
+.body-container{
+    margin: 5px;
+    border: rgba(000, 000, 000, 0.2)  solid 2px;
 }
