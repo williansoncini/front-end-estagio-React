@@ -2,9 +2,10 @@ import React from "react";
 import './logo.css'
 
 const Logo = function(){
+    const pathLogo = window.location.origin + '/logos/safra40.png'
     return(
         <div className='container'>
-            <img src="logos/safra40.png" className='logo-safra40' />
+            <img src={pathLogo} className='logo-safra40' />
         </div>
     )
 }

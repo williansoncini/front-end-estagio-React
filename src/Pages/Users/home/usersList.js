@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react"
 import React, { useContext, useState } from "react"
+import { Link } from "react-router-dom"
 import SideBar from "../../components/sideMenu/sideMenu"
 import Title from "../../components/title/title"
 import getUsers from "../../services/users/usersService"
@@ -10,8 +11,7 @@ import './usersList.css'
 export default class UsersList extends React.Component{
     state = {
         loading:true,
-        users:null,
-        modalCreateUserHidden:true
+        users:null
     };
 
     async componentDidMount(){
@@ -28,7 +28,6 @@ export default class UsersList extends React.Component{
         return(
             <>
                 <SideBar/>
-                {/* {this.state.modalCreateUserHidden?(<></>):(<CreateUser/>)} */}
                 <div className='content-container'>
                     <div className='header'>
                         <Title text='Cadastro de usuários'/>
@@ -37,15 +36,12 @@ export default class UsersList extends React.Component{
                                 <span>Filtro</span>
                                 <Icon icon="ant-design:filter-filled" color="black" width="36" height="34"/>
                             </button>
-                            <button className='button add-button' onClick={() => {
-                                this.setState({
-                                    modalCreateUserHidden:false
-                                })                             
-                                console.log(this.state.modalCreateUserHidden)    
-                            }}>  
-                                <span>Adicionar</span>
-                                <Icon icon="carbon:add-alt" color="#177359" width="36" height="34"/>
-                            </button>
+                            <Link to="/users/create">
+                                <button className='button add-button'> 
+                                    <span>Adicionar</span>
+                                    <Icon icon="carbon:add-alt" color="#177359" width="36" height="34"/>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     <div className='body-container'>

@@ -45,7 +45,7 @@ const Login = function(){
                             <input type="password" name="senha" id="senha" placeholder='Senha' className='input-text' value={password} onChange={(event) => setPassword(event.target.value)}/>
                         </div>
                         <div className='buttons'>
-                            <Link to="/home"><SubmitButton text='Entrar' name='teste' script={ClickSingIn}/> </Link>
+                            <Link to="/"><SubmitButton text='Entrar' name='teste' script={ClickSingIn}/> </Link>
                         </div>
                     </div>
                 </form>

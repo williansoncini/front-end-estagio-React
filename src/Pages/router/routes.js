@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from '../home/home'
 import Login from '../Login/login'
 import { getTokenFromLocalStorage } from '../services/auth/authService';
+import CreateUser from '../Users/create/createUser';
 import UsersList from '../Users/home/usersList';
 
 const Routes = function (){
@@ -29,6 +30,7 @@ const Routes = function (){
             <Route exact path='/'>  <Home/> </Route>
             <Route exact path='/login'> <Login/>  </Route>
             <Route exact path='/users'>  <UsersList/> </Route>
+            <Route exact path='/users/create'>  <CreateUser/> </Route>
             {/* <Route exact path='/login'> {authenticated?<Home/>:<Login/>}  </Route>
             <Route exact path='/home'>  {authenticated?<Home/>:<Login/>}  </Route> */}
             {/* <Route path='/home'>  <Home/> </Route> */}

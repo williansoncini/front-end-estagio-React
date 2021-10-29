@@ -1,0 +1,17 @@
+#submit-save-button{
+    /* margin: 10px; */
+    margin-bottom: 10px;
+    border: white solid 1px;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #177359;
+    background-color: white;
+    cursor: pointer;
+}
+
+#submit-save-button:hover{
+    transition: 0.3s;
+    color: white;
+    background-color:#177359;
+}
