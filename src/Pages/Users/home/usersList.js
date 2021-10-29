@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react"
 import { Link } from "react-router-dom"
 import SideBar from "../../components/sideMenu/sideMenu"
 import Title from "../../components/title/title"
-import getUsers from "../../services/users/usersService"
+import {getUsers} from "../../services/users/usersService"
 import CreateUser from "../create/createUser"
 import './usersList.css'
 
