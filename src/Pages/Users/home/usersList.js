@@ -25,6 +25,16 @@ export default class UsersList extends React.Component{
     }
     
     render(){
+
+        const renderUsers = function(){
+            
+            return (
+                <div>
+                    
+                </div>
+            )
+        }
+
         return(
             <>
                 <SideBar/>
@@ -63,16 +73,19 @@ export default class UsersList extends React.Component{
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {
-                                                    <tr>
-                                                        <td>{this.state.users.map(user => (user.id))} </td>
-                                                        <td>{this.state.users.map(user => (user.nome))} </td>
-                                                        <td>{this.state.users.map(user => (user.departamento))} </td>
-                                                        <td>{this.state.users.map(user => (user.email))} </td>
-                                                        <td>{this.state.users.map(user => (user.ativo))} </td>
-                                                        <td> Tem que fazer </td>
-                                                        <td> Colocar dois botões aqui </td>
-                                                    </tr>
+                                                    {this.state.users.map((user) => {
+                                                        return (
+                                                            <tr>
+                                                                <td> {user.id} </td>
+                                                                <td> {user.nome} </td>
+                                                                <td> {user.departamento} </td>
+                                                                <td> {user.email} </td>
+                                                                <td> {user.ativo} </td>
+                                                                <td> Tem que fazer </td>
+                                                                <td> Colocar dois botões aqui </td>
+                                                            </tr>
+                                                        )
+                                                    })
                                                     }
                                                 </tbody>
                                             </table>
