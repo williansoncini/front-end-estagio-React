@@ -1,16 +1,17 @@
 import './inputSelect.css'
 
-const InputSelect = function ({register, name, label, list, errors}){
+const InputSelect = function ({ register, name, label, list, value, errors }) {
     return (
         <>
-            <div className={errors[name]? 'input-text-container-error':'input-text-container'}>
+            <div className={errors[name] ? 'input-text-container-error' : 'input-text-container'}>
                 <label for={name}> {label} </label>
-                <select {...register(`${name}`, {required:true, maxLength:20})} >
-                    <option value='' selected="true"> Selecione uma das opções </option>
+                <select {...register(`${name}`, { required: true, maxLength: 20 })}>
+                    <option value={value.value} selected="true"> {value? value.name: "Selecione uma das opções"} </option>
                     {list.map((object) => {
+                        if (object.value != value.value){
                         return (
                             <option value={object.value}>{object.name}</option>
-                        )
+                        )}
                     })}
                 </select>
             </div>

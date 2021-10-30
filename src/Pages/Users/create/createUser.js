@@ -6,12 +6,12 @@ import { useForm } from "react-hook-form";
 import "./createUser.css"
 import InputText from "../../components/inputs/text/inputText";
 import InputSelect from "../../components/inputs/select/inputSelect";
-import {getArrayNameAndIdDepartaments, getNamesDepartaments} from "../../services/departaments/departamentsService";
+import { getArrayNameAndIdDepartaments } from "../../services/departaments/departamentsService";
 import InputPassword from "../../components/inputs/password/inputPassword";
 import { saveUser } from "../../services/users/usersService";
 import { Link } from "react-router-dom";
-import  { Redirect, useHistory } from 'react-router-dom'
-
+import  { useHistory } from 'react-router-dom'
+import { errorToast, successToast } from "../../providers/toast/toastProvider";
 
 const CreateUser = function(){
         const history = useHistory()
@@ -26,14 +26,18 @@ const CreateUser = function(){
 
         const { register, handleSubmit, formState: { errors }, reset} = useForm()
         const [result, setResult] = useState("")
-        // const onSubmit = (data) => setResult(JSON.stringify(data))
         const onSubmit = async (data) => {
             setResult(data)
-            const response = await saveUser(data)
-            if (response.status !== 200){
-                
+            try {
+                const response = await saveUser(data)
+                if (response.status == 200){
+                    history.push('/users')
+                    successToast(response.success)
+                }
+                errorToast(response.error)
+            } catch (error) {
+                errorToast('Erro ao salvar usuário')
             }
-            history.push('/users')
         }
 
         const acessos = ['admin', 'supervisor', 'usuário']
@@ -44,36 +48,38 @@ const CreateUser = function(){
                 <SideBar/>
                 <div className='content-container'>
                     <div className='create-user-container'>
-                            <div className='create-user-title'>
-                                <span>Cadastro de novo usuário</span>
-                            </div>
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className='itens'>
-                                    <InputText register={register} name='nome' label='Nome:' maxLength={20} errors={errors} />
-                                    <InputSelect register={register} name='departamento_id' label='Departamento:' errors={errors} list={departaments == ''?[]:departaments}/>
-                                    <InputText register={register} name='email' label='Email:' maxLength={20} errors={errors} />
-                                    <InputSelect register={register} name='ativo' label='Status*:' errors={errors} list={status}/>
-                                    {/* <InputSelect register={register} name='acesso' label='Acesso:' errors={errors} list={acessos}/> */}
-                                    <InputPassword register={register} name='senha' label='Senha:' errors={errors} />
-                                    
-                                </div>
-                                <div className='buttons'>
-                                <Link to="/users">
-                                    <CancelButton script={() => reset({
-                                        nome:'',
-                                        departamento_id:'',
-                                        email:'',
-                                        ativo:'',
-                                        acesso:'',
-                                        senha:''
-                                    })}/>
-                                 </Link>
-                                <SaveButton />
-                                </div>
-                            </form>
+                        <div className='create-user-title'>
+                            <span>Cadastro de novo usuário</span>
                         </div>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className='itens'>
+                                <InputText register={register} name='nome' label='Nome:' maxLength={20} errors={errors} />
+                                <InputSelect register={register} name='departamento_id' label='Departamento:' errors={errors} list={departaments == ''?[]:departaments}/>
+                                <InputText register={register} name='email' label='Email:' maxLength={20} errors={errors} />
+                                <InputSelect register={register} name='ativo' label='Status*:' errors={errors} list={status}/>
+                                {/* <InputSelect register={register} name='acesso' label='Acesso:' errors={errors} list={acessos}/> */}
+                                <InputPassword register={register} name='senha' label='Senha:' errors={errors} />
+                                
+                            </div>
+                            <div className='buttons'>
+                            <Link to="/users">
+                                <CancelButton script={() => reset({
+                                    nome:'',
+                                    departamento_id:'',
+                                    email:'',
+                                    ativo:'',
+                                    acesso:'',
+                                    senha:''
+                                })}/>
+                                </Link>
+                            <SaveButton />
+                            </div>
+                        </form>
                     </div>
+                </div>
+                    
             </>
         )
 }
+
 export default CreateUser

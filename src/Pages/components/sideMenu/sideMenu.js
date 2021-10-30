@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const SideBar = function(){
     return (
+        <>
         <div className='side-bar'>
             <div className='first-bar'>
                 <Link to="/" className='itens-first-bar'> <Icon icon="carbon:home" color="white" width="36" height="34" /> </Link>
@@ -24,6 +25,7 @@ const SideBar = function(){
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

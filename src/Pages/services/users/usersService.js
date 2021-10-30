@@ -3,7 +3,6 @@ import { getTokenFromLocalStorage } from '../auth/authService'
 
 const getUsers = async function(){
     let token = getTokenFromLocalStorage()
-    console.log(token)
     const bodyParameters = {}
     const config = {
         headers:{"Authorization":`Bearer ${token}`}
@@ -14,19 +13,6 @@ const getUsers = async function(){
         return {status:400}
     const users = response.data
     return users
-    // await axios.get('http://localhost:3000/users/',bodyParameters,config).then(function(response){
-    //     status = response.status
-    //     if (status == 200){
-    //         users = response.data.users
-    //     }
-    // }).catch(function (error){
-    //     status = 400
-    //     console.log(error)
-    // })
-    
-    // console.log(users)
-    // console.log(status)
-    // return {users,status}
 }
 
 export {getUsers}
@@ -37,16 +23,44 @@ const saveUser = async function(user){
     const config = {
         headers:{"Authorization":`Bearer ${token}`}
     };
-    alert(user)
-    // const jsonUser = JSON.stringify(user)
-
-    const response = await axios.post('http://localhost:3000/users/',user,config)
-    console.log('Estou na requisição de salvamento')
-    if (response.status !== 200)
-        return {status:400}
-    const users = response.data
-    console.log(users)
-    return users
+    let response = {}
+    try {
+        response = await axios.post('http://localhost:3000/users/',user,config)
+        return {
+            status: response.status,
+            success: response.data.success
+        }
+        
+    } catch (error) {
+        return {
+            status:error.response.status,
+            error:error.response.data.error
+        }
+    }
 }
 
 export {saveUser}
+
+const getUserById = async function(id){
+    let token = getTokenFromLocalStorage()
+    const bodyParameters = {}
+    const config = {
+        headers:{"Authorization":`Bearer ${token}`}
+    };
+    let response = {}
+    try {
+        response = await axios.get(`http://localhost:3000/users/${id}`,config)
+        return {
+            status: response.status,
+            success: response.data.success,
+            data: response.data.user
+        }
+    } catch (error) {
+        return {
+            status:error.response.status,
+            error:error.response.data.error
+        }
+    }
+}
+
+export {getUserById}

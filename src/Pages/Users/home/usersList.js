@@ -1,23 +1,22 @@
 import { Icon } from "@iconify/react"
-import React, { useContext, useState } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
+import DeleteIcon from "../../components/button/deleteIcon/deleteIcon"
+import EditIcon from "../../components/button/editIcon/editIcon"
 import SideBar from "../../components/sideMenu/sideMenu"
 import Title from "../../components/title/title"
 import {getUsers} from "../../services/users/usersService"
-import CreateUser from "../create/createUser"
 import './usersList.css'
-
 
 export default class UsersList extends React.Component{
     state = {
         loading:true,
-        users:null
+        users:null,
+        savedUser:false
     };
 
     async componentDidMount(){
-        console.log('to aqui no didmount')
         const users = await getUsers()
-        console.log(users)
         this.setState({
             users:users,
             loading:false
@@ -25,17 +24,7 @@ export default class UsersList extends React.Component{
     }
     
     render(){
-
-        const renderUsers = function(){
-            
-            return (
-                <div>
-                    
-                </div>
-            )
-        }
-
-        return(
+         return(
             <>
                 <SideBar/>
                 <div className='content-container'>
@@ -82,7 +71,13 @@ export default class UsersList extends React.Component{
                                                                 <td> {user.email} </td>
                                                                 <td> {user.ativo} </td>
                                                                 <td> Tem que fazer </td>
-                                                                <td> Colocar dois botões aqui </td>
+                                                                <td>
+                                                                        <EditIcon path={`users/update/${user.id}`} />
+                                                                        <DeleteIcon/>
+                                                                        {/* <div>
+                                                                            <Icon icon="bi:trash" color="#212621" width="20" height="20"/>
+                                                                        </div> */}
+                                                                </td>
                                                             </tr>
                                                         )
                                                     })

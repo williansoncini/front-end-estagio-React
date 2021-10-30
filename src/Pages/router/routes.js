@@ -6,15 +6,13 @@ import Login from '../Login/login'
 import { getTokenFromLocalStorage } from '../services/auth/authService';
 import CreateUser from '../Users/create/createUser';
 import UsersList from '../Users/home/usersList';
+import UpdateUser from '../Users/update/updateUser';
 
 const Routes = function (){
     let authenticated = checkAuthentication()
-    // console.log('Passei na autenticação')
-    console.log(authenticated)
 
     function checkAuthentication(){
         try {
-            console.log('Passei no check da autenticação')
             const token = getTokenFromLocalStorage()
             if (token != null)
                 return true
@@ -31,6 +29,7 @@ const Routes = function (){
             <Route exact path='/login'> <Login/>  </Route>
             <Route exact path='/users'>  <UsersList/> </Route>
             <Route exact path='/users/create'>  <CreateUser/> </Route>
+            <Route exact path='/users/update/:id'>  <UpdateUser/> </Route>
             {/* <Route exact path='/login'> {authenticated?<Home/>:<Login/>}  </Route>
             <Route exact path='/home'>  {authenticated?<Home/>:<Login/>}  </Route> */}
             {/* <Route path='/home'>  <Home/> </Route> */}

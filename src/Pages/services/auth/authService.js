@@ -26,9 +26,6 @@ const SingIn = async function(email, password){
         }
     })
 
-    // console.log(responseSuccess)
-    // console.log(responseError)
-
     if (responseSuccess)
         return responseSuccess
     else

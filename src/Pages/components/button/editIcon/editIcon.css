@@ -1,0 +1,11 @@
+.edit-icon{
+    border-radius: 5px;
+    padding: 5px;
+    background-color: khaki;
+    margin: 0px 5px 0px 5px;
+    cursor: pointer;
+}
+
+.edit-icon:hover{
+    background-color: gold;
+}
