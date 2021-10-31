@@ -5,6 +5,8 @@ export const AuthContext = React.createContext({})
 
 export const AuthProvider = (props) => {
     const [user, setUser] = useState({ user: {} })
+    const [authenticated, setAuthenticated] = useState(false)
+    const [test, setTest] = useState('false')
     const secret = '!#FSDFgQ@#R@323423ok4123!#Ad!#F';
     const history = useHistory()
     // const [authenticated, setAuthenticated] = useState(false)
@@ -34,7 +36,7 @@ export const AuthProvider = (props) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, setUser /*, authenticated, setAuthenticated*/, setUserInLocalStorage, checkAuthentication }}>
+        <AuthContext.Provider value={{ user, setUser, authenticated, setAuthenticated, setUserInLocalStorage, checkAuthentication, test, setTest }}>
             {props.children}
         </AuthContext.Provider>
     )

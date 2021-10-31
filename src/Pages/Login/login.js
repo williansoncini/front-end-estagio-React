@@ -12,7 +12,7 @@ import { errorToast, successToast } from '../providers/toast/toastProvider'
 const Login = function () {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const history = useHistory()
-    const {setUserInLocalStorage} = React.useContext(AuthContext)
+    const {setUserInLocalStorage, setAuthenticated, setTest} = React.useContext(AuthContext)
 
     const onSubmit = async (data) => {
         const email = data.email
@@ -22,7 +22,8 @@ const Login = function () {
             console.log(response)
             if (response.status == 200) {
                 setUserInLocalStorage(response.data)
-                // setAuthenticated(true)
+                setAuthenticated(true)
+                setTest('True')
                 history.push('/')
                 successToast(response.success)
             } else {
