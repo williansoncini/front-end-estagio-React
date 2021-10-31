@@ -5,17 +5,20 @@ import Home from '../home/home'
 import Login from '../Login/login'
 import { getTokenFromLocalStorage } from '../services/auth/authService';
 import CreateUser from '../Users/create/createUser';
+import DeleteUser from '../Users/delete/deleteUser';
 import UsersList from '../Users/home/usersList';
 import UpdateUser from '../Users/update/updateUser';
 
-const Routes = function (){
+const Routes = function () {
     let authenticated = checkAuthentication()
 
-    function checkAuthentication(){
+    function checkAuthentication() {
         try {
             const token = getTokenFromLocalStorage()
-            if (token != null)
+            if (token != null) {
+                
                 return true
+            }
             else
                 return false
         } catch (error) {
@@ -23,13 +26,14 @@ const Routes = function (){
         }
     }
 
-    return(
+    return (
         <Switch>
-            <Route exact path='/'>  <Home/> </Route>
-            <Route exact path='/login'> <Login/>  </Route>
-            <Route exact path='/users'>  <UsersList/> </Route>
-            <Route exact path='/users/create'>  <CreateUser/> </Route>
-            <Route exact path='/users/update/:id'>  <UpdateUser/> </Route>
+            <Route exact path='/'>  <Home /> </Route>
+            <Route exact path='/login'> <Login />  </Route>
+            <Route exact path='/users'>  <UsersList /> </Route>
+            <Route exact path='/users/create'>  <CreateUser /> </Route>
+            <Route exact path='/users/update/:id'>  <UpdateUser /> </Route>
+            <Route exact path='/users/delete/:id'>  <DeleteUser /> </Route>
             {/* <Route exact path='/login'> {authenticated?<Home/>:<Login/>}  </Route>
             <Route exact path='/home'>  {authenticated?<Home/>:<Login/>}  </Route> */}
             {/* <Route path='/home'>  <Home/> </Route> */}

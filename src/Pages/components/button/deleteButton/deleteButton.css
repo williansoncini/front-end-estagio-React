@@ -1,4 +1,4 @@
-#submit-save-button{
+#submit-delete-button{
     /* margin: 10px; */
     margin-bottom: 10px;
     border: white solid 1px;
@@ -11,7 +11,7 @@
     cursor: pointer;
 }
 
-#submit-save-button:hover{
+#submit-delete-button:hover{
     transition: 0.3s;
     color: white;
     background-color:#177359;

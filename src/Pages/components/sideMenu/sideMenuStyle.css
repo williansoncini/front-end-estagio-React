@@ -58,6 +58,7 @@
    padding: 30px 10px 30px 10px;
    font-size: 14;
    cursor: pointer;
+   text-align: center;
 }
 
 .second-bar-itens:hover{

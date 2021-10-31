@@ -1,38 +1,38 @@
 import axios from 'axios'
 import { getTokenFromLocalStorage } from '../auth/authService'
 
-const getDepartaments = async function(){
+const getDepartaments = async function () {
     let token = getTokenFromLocalStorage()
     const bodyParameters = {}
     const config = {
-        headers:{"Authorization":`Bearer ${token}`}
+        headers: { "Authorization": `Bearer ${token}` }
     };
-    
-    const response = await axios.get('http://localhost:3000/departaments/',config)
+
+    const response = await axios.get('http://localhost:3000/departaments/', config)
     if (response.status !== 200)
-        return {status:400}
+        return { status: 400 }
     const departaments = response.data
     return departaments
 }
 
-export {getDepartaments}
+export { getDepartaments }
 
-const getNamesDepartaments = async function (){
+const getNamesDepartaments = async function () {
     const departaments = await getDepartaments()
     let nameDepartaments = []
-    for(let i=0; i < departaments.length; i++){
+    for (let i = 0; i < departaments.length; i++) {
         nameDepartaments.push(departaments[i].descricao)
     }
-    
+
     return nameDepartaments
 }
 
-export {getNamesDepartaments}
+export { getNamesDepartaments }
 
-const getArrayNameAndIdDepartaments = async function (){
+const getArrayNameAndIdDepartaments = async function () {
     const departaments = await getDepartaments()
     let nameAndIdDepartaments = []
-    for(let i=0; i < departaments.length; i++){
+    for (let i = 0; i < departaments.length; i++) {
         nameAndIdDepartaments.push({
             name: departaments[i].descricao,
             value: departaments[i].id
@@ -41,4 +41,4 @@ const getArrayNameAndIdDepartaments = async function (){
     return nameAndIdDepartaments
 }
 
-export {getArrayNameAndIdDepartaments}
+export { getArrayNameAndIdDepartaments }

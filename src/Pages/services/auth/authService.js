@@ -1,35 +1,26 @@
 import axios from 'axios'
 
 const SingIn = async function(email, password){
-    let status = 0
-    let responseSuccess 
-    let responseError
-
-    await axios.post('http://localhost:3000/login/',{},{
-            auth:{
-                username:email,
-                password:password
-            }
+    const config = {
+        auth:{
+            username:email,
+            password:password
         }
-    ).then(function (response){
-        status = response.status
-        if (status === 200){
-            responseSuccess = {
-                'status':status,
-                'data':response.data
-            }
+    }
+    try {
+        const response = await axios.post('http://localhost:3000/login/',{},config)
+        console.log(response)
+        return{
+            status: response.status,
+            success: response.data.success,
+            data: response.data.data
         }
-    }).catch(function (error){
-        responseError = {
-            'status': error.response.status,
-            'data': error.response.data
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data.error
         }
-    })
-
-    if (responseSuccess)
-        return responseSuccess
-    else
-        return responseError
+    }
 }
 
 export {SingIn}

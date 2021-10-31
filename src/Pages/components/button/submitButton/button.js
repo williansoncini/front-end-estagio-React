@@ -4,7 +4,7 @@ import './button.css'
 const SubmitButton = function({text, name, script}){
     return (
         <div>
-            <button type='button' id='submit-button' name={name} onClick={script}>{text}</button>
+            <button type='submit' id='submit-button' name={name} onClick={script}>{text}</button>
         </div>
     )
 }

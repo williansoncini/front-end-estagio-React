@@ -44,6 +44,28 @@
     border-bottom: 1px solid #212621;
 }
 
+.input-text-error{
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    padding: 0;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    background: none;
+    border-radius: 0;
+    color: #B91818; 
+    transition: all .2s ease;
+    border-bottom: 1px solid #B91818;
+    margin-left: 5px;
+}
+
+.input-text-error:focus {
+    outline: none;
+    color: #B91818;
+    border-bottom: 1px solid #B91818;
+}
+
 .buttons{
     display: flex;
     justify-content: right;
@@ -53,3 +75,4 @@
     display: flex;
     align-items: center;
 }
+

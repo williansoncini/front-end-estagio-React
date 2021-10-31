@@ -46,3 +46,10 @@
     color: rgb(17, 17, 17);
     font-weight: bold;
 }
+
+/*DELET PART*/
+.input-text-container input:disabled{
+    background-color: #a30f0f;
+    color: white;
+    outline: none;
+}
