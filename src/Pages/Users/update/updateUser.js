@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CancelButton from "../../components/button/cancelButton/cancelButton";
 import SaveButton from "../../components/button/saveButton/saveButton";
-// import SideBar from "../../components/sideMenu/sideMenu";
 import { useForm } from "react-hook-form";
 // import "./updateUser.css"
 import InputText from "../../components/inputs/text/inputText";
@@ -72,7 +71,6 @@ const UpdateUser = function () {
 
     return (
         <>
-            {/* <SideBar /> */}
             <div className='content-container'>
                 <div className='create-user-container'>
                     <div className='create-user-title'>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CancelButton from "../../components/button/cancelButton/cancelButton";
-// import SideBar from "../../components/sideMenu/sideMenu";
 import { useForm } from "react-hook-form";
 import { getArrayNameAndIdDepartaments } from "../../services/departaments/departamentsService";
 import { deleteUser, getUserById } from "../../services/users/usersService";
@@ -62,7 +61,6 @@ const DeleteUser = function () {
 
     return (
         <>
-            {/* <SideBar /> */}
             <div className='content-container'>
                 <div className='create-user-container'>
                     <div className='create-user-title'>

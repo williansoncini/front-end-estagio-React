@@ -2,13 +2,16 @@ import './sideMenuStyle.css'
 import { Icon } from '@iconify/react'
 import Logo from '../logo/logo';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const SideBar = function () {
     const [sideMenu, setSideMenu] = useState("home")
+    // const {authenticated} = React.useContext(AuthContext)
+    // console.log(authenticated)
 
     return (
         <>
+
             <div className='side-bar'>
                 <div className='first-bar'>
                     <Link to="/" className='itens-first-bar'> <Icon icon="carbon:home" color="white" width="36" height="34" id='home' onClick={() => { setSideMenu('home') }} /> </Link>

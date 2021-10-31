@@ -4,16 +4,15 @@ import SubmitButton from '../components/button/submitButton/button'
 import { Icon } from '@iconify/react'
 import Logo from '../components/logo/logo'
 import { SingIn } from '../services/auth/authService'
-import { useAuth } from '../providers/authProvider'
+import { AuthContext, useAuth } from '../providers/authProvider'
 import { useHistory, Link } from 'react-router-dom';
-// import SideBar from '../components/sideMenu/sideMenu'
 import { useForm } from 'react-hook-form'
 import { errorToast, successToast } from '../providers/toast/toastProvider'
 
 const Login = function () {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const history = useHistory()
-
+    const {setUserInLocalStorage} = React.useContext(AuthContext)
 
     const onSubmit = async (data) => {
         const email = data.email
@@ -22,14 +21,15 @@ const Login = function () {
             const response = await SingIn(email, password)
             console.log(response)
             if (response.status == 200) {
-                localStorage.setItem('user', JSON.stringify(response.data))
-                // setAutenticated(true)
+                setUserInLocalStorage(response.data)
+                // setAuthenticated(true)
                 history.push('/')
                 successToast(response.success)
             } else {
                 errorToast(response.error)
             }
         } catch (error) {
+            console.log(error)
             errorToast('Falha ao fazer login no servidor!')
         }
     }

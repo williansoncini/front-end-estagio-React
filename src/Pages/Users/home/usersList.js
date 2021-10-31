@@ -3,7 +3,6 @@ import React from "react"
 import { Link } from "react-router-dom"
 import DeleteIcon from "../../components/button/deleteIcon/deleteIcon"
 import EditIcon from "../../components/button/editIcon/editIcon"
-// import SideBar from "../../components/sideMenu/sideMenu"
 import Title from "../../components/title/title"
 import { getUsers } from "../../services/users/usersService"
 import './usersList.css'
@@ -26,7 +25,6 @@ export default class UsersList extends React.Component {
     render() {
         return (
             <>
-                {/* <SideBar /> */}
                 <div className='content-container'>
                     <div className='header'>
                         <Title text='Cadastro de usuários' />
