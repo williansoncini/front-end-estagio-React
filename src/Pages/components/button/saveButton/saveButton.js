@@ -1,10 +1,10 @@
 import React from "react"
 import './saveButton.css'
 
-const SaveButton = function({ name, script}){
+const SaveButton = function({ name, script, text='Salvar'}){
     return (
         <div>
-            <button type='submit' id='submit-save-button' name={name} onClick={script}>Salvar</button>
+            <button type='submit' id='submit-save-button' name={name} onClick={script}>{text}</button>
         </div>
     )
 }

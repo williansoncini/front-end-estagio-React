@@ -4,8 +4,8 @@ import SubmitButton from '../components/button/submitButton/button'
 import { Icon } from '@iconify/react'
 import Logo from '../components/logo/logo'
 import { SingIn } from '../services/auth/authService'
-import { AuthContext, useAuth } from '../providers/authProvider'
-import { useHistory, Link } from 'react-router-dom';
+import { AuthContext } from '../providers/authProvider'
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form'
 import { errorToast, successToast } from '../providers/toast/toastProvider'
 
@@ -43,7 +43,6 @@ const Login = function () {
                     <div>
                         <div className='container'>
                             <Icon icon="bx:bxs-user" color="#212621" />
-                            {/* <input type="text" name="login" id="login" placeholder='Login' className='input-text' value={email}/> */}
                             <input className={errors['email'] ? 'input-text-error' : 'input-text'} {...register('email', { required: true, maxLength: 50, minLength: 10 })} type="text" placeholder="Digite seu email" />
                         </div>
                         {errors['email']?.type === 'required' && (<div className='input-text-container-message-error'> Campo requerido! </div>)}
@@ -52,7 +51,6 @@ const Login = function () {
                         <div className='container'>
                             <Icon icon="fluent:key-16-filled" color="#212621" />
                             <input className={errors['email'] ? 'input-text-error' : 'input-text'} {...register('password', { required: true, maxLength: 50/*, minLength: 6*/ })} type="password" placeholder="Digite sua senha" />
-                            {/* <input type="password" name="senha" id="senha" placeholder='Senha' className='input-text' value={password}/> */}
                         </div>
                         {errors['password']?.type === 'required' && (<div className='input-text-container-message-error'> Campo requerido! </div>)}
                         {errors['password']?.type === 'maxLength' && (<div className='input-text-container-message-error'> Tamanho maximo alcançado! </div>)}

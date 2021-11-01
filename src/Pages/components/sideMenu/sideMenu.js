@@ -14,10 +14,10 @@ const SideBar = function () {
 
             <div className='side-bar'>
                 <div className='first-bar'>
-                    <Link to="/" className='itens-first-bar'> <Icon icon="carbon:home" color="white" width="36" height="34" id='home' onClick={() => { setSideMenu('home') }} /> </Link>
-                    <Link to="/" className='itens-first-bar'> <Icon icon="majesticons:file-report-line" color="white" width="36" height="34" /> </Link>
+                    <Icon className='itens-first-bar' icon="carbon:home" color="white" width="36" height="34" id='home' onClick={() => { setSideMenu('home') }} />
+                    <Icon className='itens-first-bar' icon="majesticons:file-report-line" color="white" width="36" height="34" onClick={() => { setSideMenu('file') }} />
                     <Icon className='itens-first-bar' icon="carbon:user-filled" color="white" width="36" height="34" onClick={() => { setSideMenu('user') }} />
-                    <Link to="/" className='itens-first-bar'> <Icon icon="carbon:document" color="white" width="36" height="34" /> </Link>
+                    <Icon className='itens-first-bar' icon="carbon:document" color="white" width="36" height="34" />
                 </div>
                 <div className='second-bar'>
                     <div className='second-bar-logo'>
@@ -33,6 +33,12 @@ const SideBar = function () {
                             <Link to="/users" className='second-bar-itens'> Usuários </Link>
                         </div>
                     )}
+                    {sideMenu == 'file' && (
+                        <div className='second-bar-container-itens'>
+                            <Link to="/input/excel" className='second-bar-itens'> Importar arquivo Excel </Link>
+                        </div>
+                    )}
+
                 </div>
             </div>
         </>
