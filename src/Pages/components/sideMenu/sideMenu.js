@@ -36,6 +36,7 @@ const SideBar = function () {
                     {sideMenu == 'file' && (
                         <div className='second-bar-container-itens'>
                             <Link to="/input/excel" className='second-bar-itens'> Importar arquivo Excel </Link>
+                            <Link to="/tables" className='second-bar-itens'> Tabelas </Link>
                         </div>
                     )}
 

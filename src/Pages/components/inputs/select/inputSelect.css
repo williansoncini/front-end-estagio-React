@@ -11,7 +11,6 @@
     border-radius: 2px;
     border: solid white 1px;
     font-size: 14;
-    width: 250px;
 }
 
 .input-text-container select:focus{

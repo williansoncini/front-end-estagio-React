@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import CancelButton from '../../../components/button/cancelButton/cancelButton';
 import SaveButton from '../../../components/button/saveButton/saveButton';
 import SubmitButton from '../../../components/button/submitButton/button';
+import InputSelect from '../../../components/inputs/select/inputSelect';
 import Title from '../../../components/title/title';
-import { errorToast, loadingToast, successToast, updateToast } from '../../../providers/toast/toastProvider';
+import { loadingToast, updateToast } from '../../../providers/toast/toastProvider';
 import { importExcelOnServer } from '../../../services/file/excel/excelService';
 import './inputExcel.css'
 
 const InputExcel = function () {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [data, setData] = useState('')
 
     const onSubmit = async (data) => {
@@ -18,9 +19,9 @@ const InputExcel = function () {
         try {
             const response = await importExcelOnServer(data.excelFile[0])
             if (response.status == 200) {
-                setData(response.data.matrix)
+                setData(response.data)
                 updateToast(id, 'success', response.success)
-                console.log(response.data.matrix)
+                console.log(response.data)
             }
             else
                 updateToast(id, 'error', response.error)
@@ -38,40 +39,52 @@ const InputExcel = function () {
                 {data !== '' ?
                     <>
                         <div className='body-container'>
-                            <div>Dados carregados!</div>
-                            <div>{data}</div>
+                            <div className='file-name'>
+                                <h2>{data.fileName}</h2>
+                            </div>
                             <div className='full-size-table'>
                                 <table className='styled-table'>
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            {}
-                                            {/* <th>Nome</th>
-                                            <th>Departamento</th>
-                                            <th>Email</th>
-                                            <th>Status</th>
-                                            <th>Acesso</th>
-                                            <th>Ações</th> */}
+                                            {data.data.header.map((column) => {
+                                                return (
+                                                    <th>{column}</th>
+                                                )
+                                            })}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* {this.state.users.map((user) => {
+                                        {data.data.body.map((column) => {
                                             return (
                                                 <tr>
-                                                    <td> {user.id} </td>
-                                                    <td> {user.nome} </td>
-                                                    <td> {user.departamento_descricao} </td>
-                                                    <td> {user.email} </td>
-                                                    <td> {user.ativo_descricao} </td>
-                                                    <td> {user.tipo_acesso_descricao} </td>
+                                                    {column.map((row) => {
+                                                        return <td>{row}</td>
+                                                    })}
                                                 </tr>
                                             )
-                                        })
-                                        } */}
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
+                        <div className='body-container'>
+                            <div className='select-table'>
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <div>
+                                        <label for="checkbox"> Criar tabela automaticamente? </label>
+                                        <input type="checkbox" name="checkbox" id="" />
+                                    </div>
+                                    <div>
+                                        <label for="select-table">Selecione uma tabela para importação</label>
+                                        <select name="select-table" id="">
+                                            <option value="" selected>Selecione</option>
+                                            <option value="">teste</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div >
                     </>
                     :
                     <div className='container-excel'>

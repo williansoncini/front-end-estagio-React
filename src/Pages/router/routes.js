@@ -6,6 +6,8 @@ import InputExcel from '../Files/Excel/input/inputExcel';
 import Home from '../home/home'
 import Login from '../Login/login'
 import { AuthContext } from '../providers/authProvider';
+import CreateTable from '../tables/create/createTable';
+import ListTables from '../tables/list/listTables';
 import CreateUser from '../Users/create/createUser';
 import DeleteUser from '../Users/delete/deleteUser';
 import UsersList from '../Users/home/usersList';
@@ -30,7 +32,7 @@ export default class Routes extends React.Component {
     render() {
         return (
             <>
-                <h6>Autenticado? - {this.context.test}</h6>
+                {/* <h6>Autenticado? - {this.context.test}</h6> */}
                 {this.context.authenticated && <SideBar />}
                 <Switch>
                     <Route exact path='/login'> {this.context.authenticated ? <Home /> : <Login />} </Route>
@@ -40,6 +42,8 @@ export default class Routes extends React.Component {
                     <Route exact path='/users/update/:id'> {this.context.authenticated ? <UpdateUser /> : <Login />} </Route>
                     <Route exact path='/users/delete/:id'> {this.context.authenticated ? <DeleteUser /> : <Login />} </Route>
                     <Route exact path='/input/excel'> {this.context.authenticated ? <InputExcel /> : <Login />} </Route>
+                    <Route exact path='/tables'> {this.context.authenticated ? <ListTables /> : <Login />} </Route>
+                    <Route exact path='/tables/create'> {this.context.authenticated ? <CreateTable /> : <Login />} </Route>
                     <Route path='*'>  {this.context.authenticated ? <h6>Not Found!</h6> : <Login />} </Route>
                 </Switch>
             </>

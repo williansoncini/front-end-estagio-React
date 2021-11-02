@@ -46,7 +46,7 @@ const promisseToast = function (obj) {
 export { promisseToast }
 
 const loadingToast = function (text) {
-    return toast.loading(text);
+    return toast.loading(text, {closeOnClick: true});
 }
 
 export { loadingToast }

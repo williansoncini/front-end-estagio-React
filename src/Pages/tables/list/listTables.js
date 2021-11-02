@@ -1,23 +1,23 @@
-import { Icon } from "@iconify/react"
-import React from "react"
-import { Link } from "react-router-dom"
-import DeleteIcon from "../../components/button/deleteIcon/deleteIcon"
-import EditIcon from "../../components/button/editIcon/editIcon"
-import Title from "../../components/title/title"
-import { getUsers } from "../../services/users/usersService"
-import './usersList.css'
+import { Icon } from "@iconify/react";
+import React from "react";
+import { Link } from "react-router-dom";
+import DeleteIcon from "../../components/button/deleteIcon/deleteIcon";
+import EditIcon from "../../components/button/editIcon/editIcon";
+import Title from "../../components/title/title";
+import { getTables } from "../../services/table/tableService";
 
-export default class UsersList extends React.Component {
+export default class ListTables extends React.Component {
     state = {
         loading: true,
-        users: null,
-    };
+        tables: null
+    }
 
     async componentDidMount() {
-        const users = await getUsers()
+        const tables = await getTables()
+        console.log(tables.data)
         this.setState({
-            users: users,
-            loading: false
+            loading: false,
+            tables: tables.data
         })
     }
 
@@ -26,13 +26,13 @@ export default class UsersList extends React.Component {
             <>
                 <div className='content-container'>
                     <div className='header'>
-                        <Title text='Cadastro de usuários' />
+                        <Title text='Lista de tabelas' />
                         <div className='buttons-container'>
                             <button className='button filter-button'>
                                 <span>Filtro</span>
                                 <Icon icon="ant-design:filter-filled" color="black" width="36" height="34" />
                             </button>
-                            <Link to="/users/create">
+                            <Link to="/tables/create">
                                 <button className='button add-button'>
                                     <span>Adicionar</span>
                                     <Icon icon="carbon:add-alt" color="#177359" width="36" height="34" />
@@ -51,26 +51,22 @@ export default class UsersList extends React.Component {
                                                 <th>#</th>
                                                 {/* <th>Login</th> */}
                                                 <th>Nome</th>
-                                                <th>Departamento</th>
-                                                <th>Email</th>
+                                                <th>Categoria</th>
                                                 <th>Status</th>
-                                                <th>Acesso</th>
                                                 <th>Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.users.map((user) => {
+                                            {this.state.tables.map((table) => {
                                                 return (
                                                     <tr>
-                                                        <td> {user.id} </td>
-                                                        <td> {user.nome} </td>
-                                                        <td> {user.departamento_descricao} </td>
-                                                        <td> {user.email} </td>
-                                                        <td> {user.ativo_descricao} </td>
-                                                        <td> {user.tipo_acesso_descricao} </td>
+                                                        <td> {table.id} </td>
+                                                        <td> {table.nome} </td>
+                                                        <td> {table.categoria_descricao} </td>
+                                                        <td> {table.ativo_descricao} </td>
                                                         <td>
-                                                            <EditIcon path={`users/update/${user.id}`} />
-                                                            <DeleteIcon path={`users/delete/${user.id}`} />
+                                                            <EditIcon path={`tables/update/${table.id}`} />
+                                                            <DeleteIcon path={`tables/delete/${table.id}`} />
                                                         </td>
                                                     </tr>
                                                 )

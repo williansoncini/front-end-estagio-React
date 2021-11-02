@@ -45,3 +45,33 @@
 	outline: 1px dotted white;
 	outline: -webkit-focus-ring-color auto 5px;
 }
+
+.select-table{
+    margin: 10px;
+}
+
+.select-table label{
+    font-size: 16px;
+    font-weight: bold;
+    color: #177359;
+    border-bottom: #177359 1px solid;
+    padding: 5px;
+    margin: 20px 5px;
+}
+
+.select-table select {
+    margin: 20px 5px;
+    padding: 5px 10px;
+    border: none;
+    border-bottom: #177359 solid 1px;
+    border-top: #177359 solid 1px;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+}
+
+.file-name{
+    margin-top: 10px;
+    color: #177359;
+    text-align: center;
+}

@@ -15,6 +15,7 @@ const importExcelOnServer = async function (file) {
 
         let response = {}
         response = await axios.post(`http://localhost:3000/upload/excel`, formData, config)
+        // console.log('Soninha!')
         // return response
         return {
             status: response.status,
