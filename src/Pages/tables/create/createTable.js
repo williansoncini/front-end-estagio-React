@@ -66,7 +66,6 @@ const CreateTable = function () {
             categoria_id: categoria_id,
             colunas: colunas
         }
-        console.log(values)
 
         try {
             const response = await saveTable(values)
@@ -95,7 +94,8 @@ const CreateTable = function () {
     // const tipo_acessos = [{ name: 'Usuário', value: 1 }, { name: 'Supervisor', value: 2 }, { name: 'Administrador', value: 3 }]
     const tipo_coluna = [{ name: 'Inteiro', value: 'INT' }, { name: 'Texto', value: 'VARCHAR' }, { name: 'Número', value: 'DECIMAL' }]
     const vazio = [{ name: 'Sim', value: '1' }, { name: 'Não', value: '0' }]
-
+    // const values_tipo_coluna = 
+    
     return (
         <>
             <div className='content-container'>
@@ -127,6 +127,7 @@ const CreateTable = function () {
                                         </div>
                                     </>)
                             })}
+                            
                         </div>
                         <button type="button" className='add-column-button' id='add-column-button-teste' onClick={handleClick}>
                             <Icon icon="carbon:add-filled" color="#177359" width="50" height="50" />

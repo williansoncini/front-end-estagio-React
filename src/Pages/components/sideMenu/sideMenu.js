@@ -6,9 +6,6 @@ import React, { useState } from 'react';
 
 const SideBar = function () {
     const [sideMenu, setSideMenu] = useState("home")
-    // const {authenticated} = React.useContext(AuthContext)
-    // console.log(authenticated)
-
     return (
         <>
 

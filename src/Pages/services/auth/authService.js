@@ -9,7 +9,6 @@ const SingIn = async function(email, password){
     }
     try {
         const response = await axios.post('http://localhost:3000/login/',{},config)
-        console.log(response)
         return{
             status: response.status,
             success: response.data.success,

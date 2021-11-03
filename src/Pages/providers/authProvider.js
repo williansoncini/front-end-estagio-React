@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import jwt from 'jsonwebtoken'
+import { errorToast } from "./toast/toastProvider";
 export const AuthContext = React.createContext({})
 
 export const AuthProvider = (props) => {
@@ -25,9 +26,9 @@ export const AuthProvider = (props) => {
             const user = JSON.parse(localStorage.getItem('user'))
             const token = user.token
             const validToken = await jwt.verify(token, secret)
-            console.log(validToken)
             return true
         } catch (error) {
+            errorToast('Faça login novamente por favor')
             return false
         }
     }

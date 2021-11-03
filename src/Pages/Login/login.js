@@ -19,7 +19,6 @@ const Login = function () {
         const password = data.password
         try {
             const response = await SingIn(email, password)
-            console.log(response)
             if (response.status == 200) {
                 setUserInLocalStorage(response.data)
                 setAuthenticated(true)

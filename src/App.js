@@ -6,15 +6,6 @@ import './App.css'
 import {ToastComponent} from './Pages/components/toast/ToastComponent';
 
 function App() {
-  // const [autenticated, setAutenticated] = useState(false)
-  
-  
-  // console.log(user)
-
-  // function refreshPage() {
-  //   window.location.reload(false);
-  // }
-
   return (
     <>
       <BrowserRouter>

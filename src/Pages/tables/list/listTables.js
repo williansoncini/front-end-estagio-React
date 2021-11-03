@@ -14,7 +14,6 @@ export default class ListTables extends React.Component {
 
     async componentDidMount() {
         const tables = await getTables()
-        console.log(tables.data)
         this.setState({
             loading: false,
             tables: tables.data

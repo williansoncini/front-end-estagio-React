@@ -25,6 +25,7 @@ const UpdateUser = function () {
             if (response.error) {
                 history.push('/users')
                 errorToast(response.error)
+                
             }
             else {
                 setUser(response.data)
@@ -44,7 +45,7 @@ const UpdateUser = function () {
             const departaments = await getArrayNameAndIdDepartaments()
             setDepartaments(departaments)
         }
-    })
+    },[])
 
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm()
     const [result, setResult] = useState("")

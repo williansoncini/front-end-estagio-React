@@ -21,7 +21,6 @@ const InputExcel = function () {
             if (response.status == 200) {
                 setData(response.data)
                 updateToast(id, 'success', response.success)
-                console.log(response.data)
             }
             else
                 updateToast(id, 'error', response.error)

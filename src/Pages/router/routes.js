@@ -8,6 +8,7 @@ import Login from '../Login/login'
 import { AuthContext } from '../providers/authProvider';
 import CreateTable from '../tables/create/createTable';
 import ListTables from '../tables/list/listTables';
+import UpdateTable from '../tables/update/updateTable';
 import CreateUser from '../Users/create/createUser';
 import DeleteUser from '../Users/delete/deleteUser';
 import UsersList from '../Users/home/usersList';
@@ -17,7 +18,6 @@ export default class Routes extends React.Component {
     static contextType = AuthContext
 
     async componentDidMount() {
-        // console.log('Estou no did mount')
         const valid = await this.context.checkAuthentication()
         if (valid) {
             this.context.setAuthenticated(true)
@@ -44,6 +44,7 @@ export default class Routes extends React.Component {
                     <Route exact path='/input/excel'> {this.context.authenticated ? <InputExcel /> : <Login />} </Route>
                     <Route exact path='/tables'> {this.context.authenticated ? <ListTables /> : <Login />} </Route>
                     <Route exact path='/tables/create'> {this.context.authenticated ? <CreateTable /> : <Login />} </Route>
+                    <Route exact path='/tables/update/:id'> {this.context.authenticated ? <UpdateTable /> : <Login />} </Route>
                     <Route path='*'>  {this.context.authenticated ? <h6>Not Found!</h6> : <Login />} </Route>
                 </Switch>
             </>

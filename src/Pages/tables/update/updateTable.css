@@ -1,0 +1,46 @@
+.create-user-container{
+    width: 450px;
+    /* height: 280px; */
+    background-color: #03A66A;
+    margin: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-user-title{
+    padding: 10px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.create-user-input-text label{
+    color: white;
+    font-size: 14;
+    width: 120px; 
+    display: inline-block;
+    text-align: right;
+    margin-right: 5px;
+}
+
+.create-user-input-text input{
+    border-radius: 2px;
+    border: none;
+    font-size: 14;
+    width: 250px;
+    /* border: #177359 solid 1px; */
+}
+
+.create-user-input-text input:focus{
+    outline: none;
+    /* border: black solid 1px ; */
+
+}
+
+.buttons{ 
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-end;
+}
