@@ -49,7 +49,7 @@
 
 /*DELET PART*/
 .input-text-container input:disabled{
-    background-color: #a30f0f;
+    /* background-color: #a30f0f; */
     color: white;
-    outline: none;
-}
+    /* outline: none; */
+} 

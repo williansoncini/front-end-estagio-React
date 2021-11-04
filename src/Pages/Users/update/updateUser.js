@@ -80,7 +80,7 @@ const UpdateUser = function () {
                     {loading ? (<p> Buscando usuário </p>) : (
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className='itens'>
-                                <InputText register={register} name='id' label='Id*:' maxLength={20} errors={errors} readOnly={true} />
+                                <InputText register={register} name='id' label='Id*:' maxLength={20} errors={errors} disabled={true} />
                                 <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} />
                                 <InputSelectWithValue value={valueDepartament} register={register} name='departamento_id' label='Departamento*:' errors={errors} list={departaments == '' ? [] : departaments} />
                                 <InputText register={register} name='email' label='Email*:' maxLength={20} errors={errors} />

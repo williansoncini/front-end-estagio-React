@@ -1,11 +1,11 @@
 import './inputSelect.css'
 
-const InputSelectWithValue = function ({ register, name, label, list, value, readOnly=false, errors }) {
+const InputSelectWithValue = function ({ register, name, label, list, value, disabled=false, errors }) {
     return (
         <>
             <div className={errors[name] ? 'input-text-container-error' : 'input-text-container'}>
                 <label for={name}> {label} </label>
-                <select {...register(`${name}`, { required: true, maxLength: 20 })} readOnly={readOnly}>
+                <select {...register(`${name}`, { required: true, maxLength: 20 })} disabled={disabled}>
                     <option value={value.value} selected="true"> {value.name} </option>
                     {list.map((object) => {
                         if (object.value != value.value) {

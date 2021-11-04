@@ -11,12 +11,16 @@ import { getCategoryIdAndName } from "../../services/categoria/categoryService";
 import './createTable.css'
 import { Icon } from "@iconify/react";
 import { saveTable } from "../../services/table/tableService";
+import { getTypeColumns } from "../../services/typeColumnService/typeColumnService";
+import { saveColumns } from "../../services/columnService/columnService";
 
 const CreateTable = function () {
     const history = useHistory()
     const [categorys, setCategorys] = useState('');
     const [components, setComponents] = useState([])
     const [index, setIndex] = useState(0)
+    const [typeColumns, setTypeColumns] = useState('')
+    const [savedTable, setSavedTable] = useState('')
 
     useEffect(async () => {
         if (categorys == '') {
@@ -27,15 +31,44 @@ const CreateTable = function () {
             }
             setCategorys(response)
         }
+        if (typeColumns == '') {
+            const response = await getTypeColumns()
+            if (response.error) {
+                errorToast(response.error)
+                setTypeColumns({})
+            } else {
+                const idAndName = response.data.map((typeColumn) => {
+                    return { name: typeColumn.descricao, value: typeColumn.id }
+                })
+                setTypeColumns(idAndName)
+            }
+        }
     })
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
-    const [result, setResult] = useState("")
     const onSubmit = async (data) => {
-        const id = loadingToast('Carregando')
-        // setResult(data)
-        const nome = data.nome
-        const categoria_id = data.categoria_id
+        const dataTable = {
+            nome: data.nome,
+            categoria_id: data.categoria_id
+        }
+        console.log(dataTable)
+        let createdTable = savedTable
+        if (savedTable == '') {
+            const id_toast_table = loadingToast('Salvando tabela')
+            try {
+                const response = await saveTable(dataTable/*values*/)
+                if (response.status == 200) {
+                    // history.push('/tables')
+                    updateToast(id_toast_table, 'success', response.success.success)
+                    setSavedTable(response.success.data)
+                    createdTable = response.success.data
+                } else {
+                    updateToast(id_toast_table, 'error', response.error)
+                }
+            } catch {
+                updateToast(id_toast_table, 'error', 'Erro no envio de arquivo')
+            }
+        }
 
         const nome_colunas = []
         const tipo_colunas = []
@@ -58,25 +91,26 @@ const CreateTable = function () {
             colunas.push({
                 nome: nome_colunas[i],
                 vazio: vazio_colunas[i],
-                tipo_coluna: tipo_colunas[i],
+                tipo_coluna_id: tipo_colunas[i],
             })
         }
-        const values = {
-            nome: nome,
-            categoria_id: categoria_id,
+
+        const columnData = {
+            tabela_id: createdTable.id,
             colunas: colunas
         }
-
+        console.log(columnData)
+        const id_toast_column = loadingToast('Salvando colunas')
         try {
-            const response = await saveTable(values)
-            if (response.status == 200) {
-                history.push('/tables')
-                updateToast(id, 'success', response.success)
-            } else {
-                updateToast(id, 'error', response.error)
-            }
-        } catch (error) {
-            updateToast(id, 'error', 'Erro no envio de arquivo')
+                const response = await saveColumns(columnData)
+                if (response.status == 200) {
+                    history.push('/tables')
+                    updateToast(id_toast_column, 'success', response.success)
+                } else {
+                    updateToast(id_toast_column, 'error', response.error)
+                }
+        } catch {
+            updateToast(id_toast_column, 'error', 'Erro no envio de arquivo')
         }
     }
 
@@ -92,10 +126,11 @@ const CreateTable = function () {
     }
 
     // const tipo_acessos = [{ name: 'Usuário', value: 1 }, { name: 'Supervisor', value: 2 }, { name: 'Administrador', value: 3 }]
-    const tipo_coluna = [{ name: 'Inteiro', value: 'INT' }, { name: 'Texto', value: 'VARCHAR' }, { name: 'Número', value: 'DECIMAL' }]
+    // const tipo_coluna = [{ name: 'Inteiro', value: 'INT' }, { name: 'Texto', value: 'VARCHAR' }, { name: 'Número', value: 'DECIMAL' }]
+
     const vazio = [{ name: 'Sim', value: '1' }, { name: 'Não', value: '0' }]
     // const values_tipo_coluna = 
-    
+
     return (
         <>
             <div className='content-container'>
@@ -106,8 +141,8 @@ const CreateTable = function () {
                         </div>
                         <span></span>
                         <div className='itens'>
-                            <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} />
-                            <InputSelect register={register} name='categoria_id' label='Categoria*:' errors={errors} list={categorys == '' ? [] : categorys} />
+                            <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} disabled={savedTable != ''? true : false } />
+                            <InputSelect register={register} name='categoria_id' label='Categoria*:' errors={errors} list={categorys == '' ? [] : categorys} disabled={savedTable != ''? true : false } />
                         </div>
                     </div>
 
@@ -122,12 +157,12 @@ const CreateTable = function () {
                                     <>
                                         <div className='teste-2-2'>
                                             <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
-                                            <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={tipo_coluna} />
+                                            <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
                                             <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />
                                         </div>
                                     </>)
                             })}
-                            
+
                         </div>
                         <button type="button" className='add-column-button' id='add-column-button-teste' onClick={handleClick}>
                             <Icon icon="carbon:add-filled" color="#177359" width="50" height="50" />
