@@ -81,13 +81,11 @@ const updateTable = async function(id, data){
 
     let response = {}
     try {
-        console.log('aqui')
         response = await axios.put(`http://localhost:3000/tables/${id}`, data, config)
         console.log(response)
         return {
             status: response.status,
-            success: response.data.success,
-            data:response.data
+            success: response.success
         }
     } catch (error) {
         return {

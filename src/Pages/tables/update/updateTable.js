@@ -11,10 +11,13 @@ import InputSelect from "../../components/inputs/select/inputSelect";
 import { getCategoryIdAndName } from "../../services/categoria/categoryService";
 import { Icon } from "@iconify/react";
 import { getTableById, updateTable } from "../../services/table/tableService";
+import { getTypeColumns } from "../../services/columns/typeColumnService/typeColumnService";
+import { updateColumns } from "../../services/columnService/columnService";
 
 const UpdateTable = function () {
     const { id } = useParams()
     const [categorys, setCategorys] = useState('');
+    const [typeColumns, setTypeColumns] = useState('')
     const [index, setIndex] = useState(0)
     const history = useHistory()
     const [loading, setLoading] = useState(true)
@@ -48,6 +51,18 @@ const UpdateTable = function () {
             }
             setCategorys(response)
         }
+        if (typeColumns == '') {
+            const response = await getTypeColumns()
+            if (response.error) {
+                errorToast(response.error)
+                setTypeColumns({})
+            } else {
+                const idAndName = response.data.map((typeColumn) => {
+                    return { name: typeColumn.descricao, value: typeColumn.id }
+                })
+                setTypeColumns(idAndName)
+            }
+        }
     }, []
     )
 
@@ -65,65 +80,104 @@ const UpdateTable = function () {
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm()
 
     const onSubmit = async (data) => {
-        const id_toast = loadingToast('Carregando')
-        const nome = data.nome
-        const categoria_id = data.categoria_id
-        const ativa = data.ativa
+        // const nome = data.nome
+        // const categoria_id = data.categoria_id
+        // const ativa = data.ativa
+        // const valuesTableUpdate = {
+        //     nome:nome,
+        //     ativa:ativa,
+        //     categoria_id:categoria_id
+        // }
+        
+        // const id_toast_update_table = loadingToast('Carregando')
+        // try {
+        //     const response = await updateTable(id, valuesTableUpdate)
+        //     if (response.status == 200 ) {
+        //         history.push('/tables')
+        //         updateToast(id_toast_update_table, 'success', response.success)
+        //     } else if (response.status == 304){
+        //         history.push('/tables')
+        //         updateToast(id_toast_update_table, 'success', 'Nada alterado na tabela')
+        //     }
+        //     else {
+        //         updateToast(id_toast_update_table, 'error', response.error)
+        //     }
+        // } catch (error) {
+        //     updateToast(id_toast_update_table, 'error', 'Erro na alteração da tabela')
+        // }
 
-        const nome_colunas = []
-        const tipo_colunas = []
-        const vazio_colunas = []
-        let key;
-        for (key in data) {
-            if (key.includes('name')) {
-                nome_colunas.push(data[key])
-            }
-            if (key.includes('type')) {
-                tipo_colunas.push(data[key])
-            }
-            if (key.includes('null')) {
-                vazio_colunas.push(data[key])
-            }
-        }
         const colunas = []
         columns.map((column) => {
             colunas.push({
-                nome: data[column.nome],
-                vazio: data[column.nome + 'type'],
-                tipo_coluna: data[column.nome + 'null'],
+                id:column.id,
+                nome: column.nome,
+                vazio: column.vazio,
+                tipo_coluna_id: column.tipo_coluna_id
             })
         })
-
-        for (let i = 0; i < nome_colunas.length; i++) {
-            colunas.push({
-                nome: nome_colunas[i],
-                vazio: vazio_colunas[i],
-                tipo_coluna: tipo_colunas[i],
-            })
+        const valuesUpdateColumns = {
+            tabela_id:id,
+            colunas:colunas
         }
+        console.log(valuesUpdateColumns)
 
-        const values = {
-            nome: nome,
-            categoria_id: categoria_id,
-            ativa:ativa,
-            colunas: colunas
-        }
-
+        const id_toast_update_table = loadingToast('Carregando')
         try {
-            const response = await updateTable(id, values)
-            if (response.status == 200) {
+            const response = await updateColumns(valuesUpdateColumns)
+            if (response.status == 200 ) {
                 history.push('/tables')
-                updateToast(id_toast, 'success', response.success)
-            } else {
-                updateToast(id_toast, 'error', response.error)
+                updateToast(id_toast_update_table, 'success', response.success)
+            } else if (response.status == 304){
+                history.push('/tables')
+                updateToast(id_toast_update_table, 'success', 'Nada alterado nas colunas existentes')
+            }
+            else {
+                updateToast(id_toast_update_table, 'error', response.error)
             }
         } catch (error) {
-            updateToast(id_toast, 'error', 'Erro na alteração da tabela')
+            updateToast(id_toast_update_table, 'error', 'Erro na alteração da tabela')
         }
+
+        // const nome_colunas = []
+        // const tipo_colunas = []
+        // const vazio_colunas = []
+        // let key;
+        // for (key in data) {
+        //     if (key.includes('name')) {
+        //         nome_colunas.push(data[key])
+        //     }
+        //     if (key.includes('type')) {
+        //         tipo_colunas.push(data[key])
+        //     }
+        //     if (key.includes('null')) {
+        //         vazio_colunas.push(data[key])
+        //     }
+        // }
+      
+
+        // for (let i = 0; i < nome_colunas.length; i++) {
+        //     colunas.push({
+        //         nome: nome_colunas[i],
+        //         vazio: vazio_colunas[i],
+        //         tipo_coluna: tipo_colunas[i],
+        //     })
+        // }
+
+        
+        // try {
+        //     const response = await updateTable(id, values)
+        //     if (response.status == 200) {
+        //         history.push('/tables')
+        //         updateToast(id_toast, 'success', response.success)
+        //     } else {
+        //         updateToast(id_toast, 'error', response.error)
+        //     }
+        // } catch (error) {
+        //     updateToast(id_toast, 'error', 'Erro na alteração da tabela')
+        // }
     }
 
     const status = [{ name: 'Ativo', value: '1' }, { name: 'Inativo', value: '0' }]
-    const tipo_coluna = [{ name: 'Inteiro', value: 'INT' }, { name: 'Texto', value: 'VARCHAR' }, { name: 'Número', value: 'DECIMAL' }]
     const values_ativo = { value: table.ativa, name: table.ativo_descricao }
     const values_categoria = { value: table.categoria_id, name: table.categoria_descricao }
     const vazio = [{ name: 'Sim', value: '1' }, { name: 'Não', value: '0' }]
@@ -156,24 +210,25 @@ const UpdateTable = function () {
                                 </div>
                                 <div >
                                     {columns.map((column) => {
-                                        const value_tipo = { value: column.tipo_coluna, name: column.tipo_coluna }
+                                        // console.log(column)
+                                        const value_tipo = { value: column.tipo_coluna_id, name: column.tipo_coluna_descricao }
                                         const value_vazio = { value: column.vazio, name: column.vazio_descricao }
                                         setValue(column.nome, column.nome)
                                         return (
                                             <>
                                                 <div className='teste-2-2'>
                                                     <InputText register={register} name={column.nome} label='Nome*: ' errors={errors} />
-                                                    <InputSelectWithValue value={value_tipo} register={register} name={column.nome + 'type'} label='Tipo*: ' errors={errors} list={tipo_coluna} />
+                                                    <InputSelectWithValue value={value_tipo} register={register} name={column.nome + 'type'} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
                                                     <InputSelectWithValue value={value_vazio} register={register} name={column.nome + 'null'} label='Vazio?*: ' errors={errors} list={vazio} />
                                                 </div>
                                             </>)
                                     })}
                                     {components.map((component) => {
-                                        return (
+                                    return (
                                             <>
                                                 <div className='teste-2-2'>
                                                     <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
-                                                    <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={tipo_coluna} />
+                                                    <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
                                                     <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />
                                                 </div>
                                             </>)
@@ -186,7 +241,7 @@ const UpdateTable = function () {
 
 
                                 <div className='buttons'>
-                                    <Link to="/users">
+                                    <Link to="/tables">
                                         <CancelButton script={() => reset({
                                             nome: '',
                                             departamento_id: '',

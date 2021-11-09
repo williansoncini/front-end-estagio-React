@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getTokenFromLocalStorage } from "../auth/authService";
+import { getTokenFromLocalStorage } from "../../auth/authService";
 
 const getTypeColumns = async function(){
     let token = getTokenFromLocalStorage()

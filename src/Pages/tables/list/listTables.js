@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import DeleteIcon from "../../components/button/deleteIcon/deleteIcon";
 import EditIcon from "../../components/button/editIcon/editIcon";
 import Title from "../../components/title/title";
+import { errorToast } from "../../providers/toast/toastProvider";
 import { getTables } from "../../services/table/tableService";
 
 export default class ListTables extends React.Component {
@@ -13,11 +14,16 @@ export default class ListTables extends React.Component {
     }
 
     async componentDidMount() {
-        const tables = await getTables()
-        this.setState({
-            loading: false,
-            tables: tables.data
-        })
+        try {
+            const tables = await getTables()
+            this.setState({
+                loading: false,
+                tables: tables.data
+            })
+        } catch (error) {
+            errorToast('Falha ao conectar na API!')
+        }
+       
     }
 
     render() {
@@ -46,7 +52,7 @@ export default class ListTables extends React.Component {
                                 <div className='full-size-table'>
                                     <table className='styled-table'>
                                         <thead>
-                                            <tr>
+                                            <tr>    
                                                 <th>#</th>
                                                 {/* <th>Login</th> */}
                                                 <th>Nome</th>
