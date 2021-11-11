@@ -11,8 +11,9 @@ import { getCategoryIdAndName } from "../../services/categoria/categoryService";
 import './createTable.css'
 import { Icon } from "@iconify/react";
 import { saveTable } from "../../services/table/tableService";
-import { getTypeColumns } from "../../services/columns/typeColumnService/typeColumnService";
+
 import { saveColumns } from "../../services/columnService/columnService";
+import { getTypeColumns } from "../../services/typeColumnService/typeColumnService";
 
 const CreateTable = function () {
     const history = useHistory()

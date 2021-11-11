@@ -11,8 +11,8 @@ import InputSelect from "../../components/inputs/select/inputSelect";
 import { getCategoryIdAndName } from "../../services/categoria/categoryService";
 import { Icon } from "@iconify/react";
 import { getTableById, updateTable } from "../../services/table/tableService";
-import { getTypeColumns } from "../../services/columns/typeColumnService/typeColumnService";
-import { updateColumns } from "../../services/columnService/columnService";
+import { saveColumns, updateColumns } from "../../services/columnService/columnService";
+import { getTypeColumns } from "../../services/typeColumnService/typeColumnService";
 
 const UpdateTable = function () {
     const { id } = useParams()
@@ -80,56 +80,24 @@ const UpdateTable = function () {
     const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm()
 
     const onSubmit = async (data) => {
-        // const nome = data.nome
-        // const categoria_id = data.categoria_id
-        // const ativa = data.ativa
-        // const valuesTableUpdate = {
-        //     nome:nome,
-        //     ativa:ativa,
-        //     categoria_id:categoria_id
-        // }
-        
-        // const id_toast_update_table = loadingToast('Carregando')
-        // try {
-        //     const response = await updateTable(id, valuesTableUpdate)
-        //     if (response.status == 200 ) {
-        //         history.push('/tables')
-        //         updateToast(id_toast_update_table, 'success', response.success)
-        //     } else if (response.status == 304){
-        //         history.push('/tables')
-        //         updateToast(id_toast_update_table, 'success', 'Nada alterado na tabela')
-        //     }
-        //     else {
-        //         updateToast(id_toast_update_table, 'error', response.error)
-        //     }
-        // } catch (error) {
-        //     updateToast(id_toast_update_table, 'error', 'Erro na alteração da tabela')
-        // }
-
-        const colunas = []
-        columns.map((column) => {
-            colunas.push({
-                id:column.id,
-                nome: column.nome,
-                vazio: column.vazio,
-                tipo_coluna_id: column.tipo_coluna_id
-            })
-        })
-        const valuesUpdateColumns = {
-            tabela_id:id,
-            colunas:colunas
+        const nome = data.nome
+        const categoria_id = data.categoria_id
+        const ativa = data.ativa
+        const valuesTableUpdate = {
+            nome:nome,
+            ativa:ativa,
+            categoria_id:categoria_id
         }
-        console.log(valuesUpdateColumns)
 
         const id_toast_update_table = loadingToast('Carregando')
         try {
-            const response = await updateColumns(valuesUpdateColumns)
+            const response = await updateTable(id, valuesTableUpdate)
             if (response.status == 200 ) {
                 history.push('/tables')
                 updateToast(id_toast_update_table, 'success', response.success)
             } else if (response.status == 304){
                 history.push('/tables')
-                updateToast(id_toast_update_table, 'success', 'Nada alterado nas colunas existentes')
+                updateToast(id_toast_update_table, 'success', 'Nada alterado na tabela')
             }
             else {
                 updateToast(id_toast_update_table, 'error', response.error)
@@ -138,43 +106,80 @@ const UpdateTable = function () {
             updateToast(id_toast_update_table, 'error', 'Erro na alteração da tabela')
         }
 
-        // const nome_colunas = []
-        // const tipo_colunas = []
-        // const vazio_colunas = []
-        // let key;
-        // for (key in data) {
-        //     if (key.includes('name')) {
-        //         nome_colunas.push(data[key])
-        //     }
-        //     if (key.includes('type')) {
-        //         tipo_colunas.push(data[key])
-        //     }
-        //     if (key.includes('null')) {
-        //         vazio_colunas.push(data[key])
-        //     }
-        // }
-      
+        const colunas = []
+        columns.map((column) => {
+            colunas.push({
+                id:column.id,
+                nome: data[column.nome],
+                vazio: data[column.nome + 'null'],
+                tipo_coluna_id: data[column.nome + 'type']
+            })
+        })
+        const valuesUpdateColumns = {
+            tabela_id:id,
+            colunas:colunas
+        }
 
-        // for (let i = 0; i < nome_colunas.length; i++) {
-        //     colunas.push({
-        //         nome: nome_colunas[i],
-        //         vazio: vazio_colunas[i],
-        //         tipo_coluna: tipo_colunas[i],
-        //     })
-        // }
+        const id_toast_update_columns = loadingToast('Carregando')
+        try {
+            const response = await updateColumns(valuesUpdateColumns)
+            if (response.status == 200 ) {
+                history.push('/tables')
+                updateToast(id_toast_update_columns, 'success', response.success)
+            } else if (response.status == 304){
+                history.push('/tables')
+                updateToast(id_toast_update_columns, 'success', 'Nada alterado nas colunas existentes')
+            }
+            else {
+                updateToast(id_toast_update_columns, 'error', response.error)
+            }
+        } catch (error) {
+            updateToast(id_toast_update_columns, 'error', 'Erro na alteração da tabela')
+        }
 
-        
-        // try {
-        //     const response = await updateTable(id, values)
-        //     if (response.status == 200) {
-        //         history.push('/tables')
-        //         updateToast(id_toast, 'success', response.success)
-        //     } else {
-        //         updateToast(id_toast, 'error', response.error)
-        //     }
-        // } catch (error) {
-        //     updateToast(id_toast, 'error', 'Erro na alteração da tabela')
-        // }
+        const nome_colunas = []
+        const tipo_colunas = []
+        const vazio_colunas = []
+        let key;
+        for (key in data) {
+            if (key.includes('name')) {
+                nome_colunas.push(data[key])
+            }
+            if (key.includes('type')) {
+                tipo_colunas.push(data[key])
+            }
+            if (key.includes('null')) {
+                vazio_colunas.push(data[key])
+            }
+        }
+
+        if (nome_colunas.length > 0) {
+            let new_columns = []
+            for (let i = 0; i < nome_colunas.length; i++) {
+                new_columns.push({
+                    nome: nome_colunas[i],
+                    vazio: vazio_colunas[i],
+                    tipo_coluna_id: tipo_colunas[i],
+                })
+            }
+
+            const valuesCreateColumns = {
+                tabela_id: id,
+                colunas: new_columns
+            }
+            const id_toast_create_columns = loadingToast('Carregando')
+            try {
+                const response = await saveColumns(valuesCreateColumns)
+                if (response.status == 200) {
+                    history.push('/tables')
+                    updateToast(id_toast_create_columns, 'success', response.success)
+                } else {
+                    updateToast(id_toast_create_columns, 'error', response.error)
+                }
+            } catch (error) {
+                updateToast(id_toast_create_columns, 'error', 'Erro na alteração da tabela')
+            }
+        }
     }
 
     const status = [{ name: 'Ativo', value: '1' }, { name: 'Inativo', value: '0' }]
@@ -224,7 +229,7 @@ const UpdateTable = function () {
                                             </>)
                                     })}
                                     {components.map((component) => {
-                                    return (
+                                        return (
                                             <>
                                                 <div className='teste-2-2'>
                                                     <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
