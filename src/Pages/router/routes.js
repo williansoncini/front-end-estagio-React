@@ -7,6 +7,7 @@ import Home from '../home/home'
 import Login from '../Login/login'
 import { AuthContext } from '../providers/authProvider';
 import CreateTable from '../tables/create/createTable';
+import DeleteTable from '../tables/delete/deleteTable';
 import ListTables from '../tables/list/listTables';
 import UpdateTable from '../tables/update/updateTable';
 import CreateUser from '../Users/create/createUser';
@@ -45,6 +46,7 @@ export default class Routes extends React.Component {
                     <Route exact path='/tables'> {this.context.authenticated ? <ListTables /> : <Login />} </Route>
                     <Route exact path='/tables/create'> {this.context.authenticated ? <CreateTable /> : <Login />} </Route>
                     <Route exact path='/tables/update/:id'> {this.context.authenticated ? <UpdateTable /> : <Login />} </Route>
+                    <Route exact path='/tables/delete/:id'> {this.context.authenticated ? <DeleteTable /> : <Login />} </Route>
                     <Route path='*'>  {this.context.authenticated ? <h6>Not Found!</h6> : <Login />} </Route>
                 </Switch>
             </>

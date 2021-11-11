@@ -96,3 +96,27 @@ const updateTable = async function(id, data){
 }
 
 export {updateTable}
+
+const deleteTable = async function(id){
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.delete(`http://localhost:3000/tables/${id}`, config)
+        console.log(response)
+        return {
+            status: response.status,
+            success: response.success
+        }
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data.error
+        }
+    }
+}
+
+export {deleteTable}
