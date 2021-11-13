@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CancelButton from '../../../components/button/cancelButton/cancelButton';
+import DeleteButton from '../../../components/button/deleteButton/deleteButton';
 import SaveButton from '../../../components/button/saveButton/saveButton';
 import SubmitButton from '../../../components/button/submitButton/button';
 import InputSelect from '../../../components/inputs/select/inputSelect';
@@ -13,13 +14,16 @@ import './inputExcel.css'
 const InputExcel = function () {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [data, setData] = useState('')
+    const [nameFile, setNameFile] = useState('')
 
     const onSubmit = async (data) => {
         const id = loadingToast('Carregando')
         try {
             const response = await importExcelOnServer(data.excelFile[0])
             if (response.status == 200) {
-                setData(response.data)
+                // console.log(response.data)
+                setData(response.data.data)
+                setNameFile(response.data.fileName)
                 updateToast(id, 'success', response.success)
             }
             else
@@ -45,7 +49,7 @@ const InputExcel = function () {
                                 <table className='styled-table'>
                                     <thead>
                                         <tr>
-                                            {data.data.header.map((column) => {
+                                            {data.header.map((column) => {
                                                 return (
                                                     <th>{column}</th>
                                                 )
@@ -53,7 +57,7 @@ const InputExcel = function () {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.data.body.map((column) => {
+                                        {data.body.map((column) => {
                                             return (
                                                 <tr>
                                                     {column.map((row) => {
@@ -72,14 +76,21 @@ const InputExcel = function () {
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <div>
                                         <label for="checkbox"> Criar tabela automaticamente? </label>
-                                        <input type="checkbox" name="checkbox" id="" />
+                                        <input type="checkbox" name="checkbox" class='custon-checkbox' />
                                     </div>
+                                    {/* 
                                     <div>
                                         <label for="select-table">Selecione uma tabela para importação</label>
                                         <select name="select-table" id="">
                                             <option value="" selected>Selecione</option>
                                             <option value="">teste</option>
                                         </select>
+                                    </div> 
+                                    */}
+
+                                    <div>
+                                        <SubmitButton text='Salvar'/>
+                                        <DeleteButton/>
                                     </div>
                                 </form>
                             </div>
