@@ -23,7 +23,6 @@ export default class ListTables extends React.Component {
         } catch (error) {
             errorToast('Falha ao conectar na API!')
         }
-       
     }
 
     render() {

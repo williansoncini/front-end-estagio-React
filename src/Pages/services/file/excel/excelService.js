@@ -11,7 +11,7 @@ const importExcelOnServer = async function (file) {
             }
         };
         let formData = new FormData()
-        formData.append('excelFile',file)
+        formData.append('excelFile', file)
 
         let response = {}
         response = await axios.post(`http://localhost:3000/upload/excel`, formData, config)
@@ -30,4 +30,57 @@ const importExcelOnServer = async function (file) {
     }
 }
 
-export {importExcelOnServer}
+export { importExcelOnServer }
+
+export async function importFileWithCreateTable(data) {
+    try {
+        let token = getTokenFromLocalStorage()
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+        
+        let response = {}
+        response = await axios.post(`http://localhost:3000/import/create`, data, config)
+
+        // console.log('Soninha!')
+        return {
+            status: response.status,
+            success: response.data.success,
+            tabela_id: response.data.tabela_id
+        }
+    } catch (error) {
+        // return error
+        return {
+            status: error.response.status,
+            error: error.response.error
+        }
+    }
+}
+
+export async function importDataIntoTable(data){
+    try {
+        let token = getTokenFromLocalStorage()
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        };
+        
+        let response = {}
+        response = await axios.post(`http://localhost:3000/import/table`, data, config)
+
+        return {
+            status: response.status,
+            success: response.data.success,
+            tabela_id: response.data.tabela_id
+        }
+    } catch (error) {
+        // return error
+        return {
+            status: error.response.status,
+            error: error.response.error
+        }
+    }
+}

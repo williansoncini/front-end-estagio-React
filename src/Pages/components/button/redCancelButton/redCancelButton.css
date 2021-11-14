@@ -1,18 +1,17 @@
-#submit-button{
+.red-cancel-button{
     margin: 10px;
     border:0;
     padding: 5px;
     border-radius: 5px;
     font-size: 14px;
     color: whitesmoke;
-    background-color: #177359;
+    background-color: #b91818;
 }
-
-#submit-button:hover{
+.red-cancel-button:hover{
     padding: 5px;
     border-radius: 5px;
     font-size: 14px;
     color: whitesmoke;
-    background-color: #03412f;
+    background-color: #770f0f;
     cursor: pointer;
 }

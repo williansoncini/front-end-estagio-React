@@ -50,8 +50,13 @@
     margin: 10px;
 }
 
-.select-table label{
-    font-size: 16px;
+.select-table{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* .select-table label{
+    font-size: 14px;
     font-weight: bold;
     color: white;
     background-color: #177359;
@@ -67,17 +72,10 @@
     border-bottom: #177359 solid 1px;
     border-top: #177359 solid 1px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     outline: none;
-}
+} */
 
-.custon-checkbox{
-    /* position: absolute; */
-    
-    height: 20px;
-    width: 20px;
-    background-color: #177359;
-}
 
 .file-name{
     margin-top: 10px;
