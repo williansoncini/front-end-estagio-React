@@ -97,7 +97,7 @@ const DeleteTable = function (){
                                         setValue(column.nome, column.nome)
                                         return (
                                             <>
-                                                <div className='teste-2-2'>
+                                                <div className='white-container-columns'>
                                                     <InputTextDisabled register={register} name={column.nome} label='Nome*: ' errors={errors} />
                                                     <InputTextDisabled register={register} name={column.nome + 'type'} label='Tipo*: ' errors={errors} />
                                                     <InputTextDisabled register={register} name={column.nome + 'null'} label='Vazio?*: ' errors={errors} />

@@ -13,6 +13,7 @@ import { Icon } from "@iconify/react";
 import { getTableById, updateTable } from "../../services/table/tableService";
 import { saveColumns, updateColumns } from "../../services/columnService/columnService";
 import { getTypeColumns } from "../../services/typeColumnService/typeColumnService";
+import './updateTable.css'
 
 const UpdateTable = function () {
     const { id } = useParams()
@@ -84,18 +85,18 @@ const UpdateTable = function () {
         const categoria_id = data.categoria_id
         const ativa = data.ativa
         const valuesTableUpdate = {
-            nome:nome,
-            ativa:ativa,
-            categoria_id:categoria_id
+            nome: nome,
+            ativa: ativa,
+            categoria_id: categoria_id
         }
 
         const id_toast_update_table = loadingToast('Carregando')
         try {
             const response = await updateTable(id, valuesTableUpdate)
-            if (response.status == 200 ) {
+            if (response.status == 200) {
                 history.push('/tables')
                 updateToast(id_toast_update_table, 'success', response.success)
-            } else if (response.status == 304){
+            } else if (response.status == 304) {
                 history.push('/tables')
                 updateToast(id_toast_update_table, 'success', 'Nada alterado na tabela')
             }
@@ -109,24 +110,24 @@ const UpdateTable = function () {
         const colunas = []
         columns.map((column) => {
             colunas.push({
-                id:column.id,
+                id: column.id,
                 nome: data[column.nome],
                 vazio: data[column.nome + 'null'],
                 tipo_coluna_id: data[column.nome + 'type']
             })
         })
         const valuesUpdateColumns = {
-            tabela_id:id,
-            colunas:colunas
+            tabela_id: id,
+            colunas: colunas
         }
 
         const id_toast_update_columns = loadingToast('Carregando')
         try {
             const response = await updateColumns(valuesUpdateColumns)
-            if (response.status == 200 ) {
+            if (response.status == 200) {
                 history.push('/tables')
                 updateToast(id_toast_update_columns, 'success', response.success)
-            } else if (response.status == 304){
+            } else if (response.status == 304) {
                 history.push('/tables')
                 updateToast(id_toast_update_columns, 'success', 'Nada alterado nas colunas existentes')
             }
@@ -221,7 +222,7 @@ const UpdateTable = function () {
                                         setValue(column.nome, column.nome)
                                         return (
                                             <>
-                                                <div className='teste-2-2'>
+                                                <div className='white-container-columns'>
                                                     <InputText register={register} name={column.nome} label='Nome*: ' errors={errors} />
                                                     <InputSelectWithValue value={value_tipo} register={register} name={column.nome + 'type'} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
                                                     <InputSelectWithValue value={value_vazio} register={register} name={column.nome + 'null'} label='Vazio?*: ' errors={errors} list={vazio} />
@@ -231,7 +232,7 @@ const UpdateTable = function () {
                                     {components.map((component) => {
                                         return (
                                             <>
-                                                <div className='teste-2-2'>
+                                                <div className='white-container-columns'>
                                                     <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
                                                     <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
                                                     <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />
@@ -244,6 +245,11 @@ const UpdateTable = function () {
                                     <span> Adicionar nova coluna </span>
                                 </button>
 
+                                <Link to={`/tables/${id}/data`}>
+                                    <button type='button' className='button-show-data'>
+                                        Mostrar dados
+                                    </button>
+                                </Link>
 
                                 <div className='buttons'>
                                     <Link to="/tables">

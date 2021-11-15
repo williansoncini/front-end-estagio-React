@@ -156,7 +156,7 @@ const CreateTable = function () {
                             {components.map((component) => {
                                 return (
                                     <>
-                                        <div className='teste-2-2'>
+                                        <div className='white-container-columns'>
                                             <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
                                             <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
                                             <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />

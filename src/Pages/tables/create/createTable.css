@@ -8,7 +8,6 @@
     margin: 15px;
     border-radius: 10px;
     background-color: white;
-    /* border-color: white; */
     border:white 1px solid;
     display: flex;
     align-items: center;
@@ -19,7 +18,7 @@
 .add-column-button span{
     font-size: 18px;
     font-weight: bold;
-    text-align: center;
+    /* text-align: center; */
     color: #404741;
 }
 
@@ -35,17 +34,23 @@
     background-color: #bdbdbd;
 }
 
-.teste-2-2{
-    display: flex;
+.white-container-columns{
+    background-color: rgba(233, 233, 233, 0.193);
+    border-radius: 5px;
+    padding: 10px;
+    display: block;
     margin: 5px 0px;
 }
 
 .create-column-container{
+    width: 450px;
+    min-width: 450px;
+    /* width: 70%; */
     background-color: #177359;
     margin: 15px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 25px 0px;
+    /* padding: 25px 0px; */
 }

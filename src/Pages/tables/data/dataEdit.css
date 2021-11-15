@@ -1,0 +1,52 @@
+.add-column-button-green{
+    margin: 15px;
+    border-radius: 10px;
+    background-color: #177359;
+    border:#177359 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-column-button-green span{
+    font-size: 18px;
+    font-weight: bold;
+    /* text-align: center; */
+    color: white;
+}
+
+.add-column-button-green:hover{
+    border-color: #03a66a 1px solid;
+}
+
+.add-column-button-green:active{
+    background-color: #bdbdbd;
+}
+
+.input-data-table{
+    width: 100%;
+    border: solid 1px rgb(143, 143, 143);
+    outline: none;
+}
+
+.input-data-table-error{
+    width: 100%;
+    border: solid 1px rgb(143, 143, 143);
+    outline: none;
+}
+
+.input-data-table-delete{
+    width: 100%;
+    border: solid 1px #d00000;
+    background-color: #d00000;
+    color: white;
+    outline: none;
+}
+
+.input-data-table-update{
+    width: 100%;
+    border: solid 1px #ffd60a;
+    background-color: #ffd60a;
+    outline: none;
+}

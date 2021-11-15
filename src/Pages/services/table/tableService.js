@@ -120,3 +120,25 @@ const deleteTable = async function(id){
 }
 
 export {deleteTable}
+
+export async function insertDataIntoTable(id, data){
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.post(`http://localhost:3000/tables/${id}/data`, data,config)
+        console.log(response)
+        return {
+            status: response.status,
+            success: response.data
+        }
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}
