@@ -2,6 +2,11 @@ import { Icon } from "@iconify/react"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useHistory, useParams } from "react-router"
+import { Link } from "react-router-dom"
+import CancelButton from "../../components/button/cancelButton/cancelButton"
+import RedCancelButton from "../../components/button/redCancelButton/redCancelButton"
+import SaveButton from "../../components/button/saveButton/saveButton"
+import SubmitButton from "../../components/button/submitButton/button"
 import Title from "../../components/title/title"
 import { errorToast, loadingToast, updateToast } from "../../providers/toast/toastProvider"
 import { getTableById, insertDataIntoTable } from "../../services/table/tableService"
@@ -53,7 +58,7 @@ export default function InsertDataOnTable() {
             console.log(response)
             if (response.status == 200) {
                 updateToast(id_toast, 'success', response.success)
-                // history.push(`/tables/update/${response.tabela_id}`)
+                history.push(`/tables/update/${id}`)
             } else
                 updateToast(id_toast, 'error', response.error)
         } catch (error) {
@@ -96,12 +101,17 @@ export default function InsertDataOnTable() {
                                 </tbody>
                             </table>
 
-                            <button type='button' className='add-column-button-green' onClick={addColumn}>
-                                <Icon icon="carbon:add-filled" color="white" width="50" height="50" />
-                                <span> Adicionar nova coluna </span>
-                            </button>
+                            <div className='centred-container'>
+                                <button type='button' className='add-column-button-green' onClick={addColumn}>
+                                    <Icon icon="carbon:add-filled" color="white" width="50" height="50" />
+                                    <span> Adicionar nova coluna </span>
+                                </button>
+                            </div>
 
-                            <button type="submit">teste</button>
+                            <div class='buttons-center'>
+                                <SubmitButton text='Salvar' />
+                                <RedCancelButton />
+                            </div>
                         </form>
                     )
                 }

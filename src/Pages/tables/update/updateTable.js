@@ -245,11 +245,19 @@ const UpdateTable = function () {
                                     <span> Adicionar nova coluna </span>
                                 </button>
 
-                                <Link to={`/tables/${id}/data`}>
-                                    <button type='button' className='button-show-data'>
-                                        Mostrar dados
-                                    </button>
-                                </Link>
+                                <div className='buttons-center'>
+                                    <Link to={`/tables/${id}/data/insert`}>
+                                        <button type='button' className='button-show-data'>
+                                            Adicionar dados
+                                        </button>
+                                    </Link>
+
+                                    <Link to={`/tables/${id}/data/update`}>
+                                        <button type='button' className='button-show-data'>
+                                            Editar dados
+                                        </button>
+                                    </Link>
+                                </div>
 
                                 <div className='buttons'>
                                     <Link to="/tables">

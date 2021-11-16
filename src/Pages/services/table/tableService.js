@@ -142,3 +142,25 @@ export async function insertDataIntoTable(id, data){
         }
     }
 }
+
+export async function getDataFromTable(id){
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.get(`http://localhost:3000/tables/${id}/data`, config)
+        return {
+            status: response.status,
+            success: response.success,
+            data: response.data.data
+        }
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}

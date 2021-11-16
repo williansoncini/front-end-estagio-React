@@ -1,0 +1,20 @@
+.export-button{
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+    background-color:#177359;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.export-button:hover{
+    background-color:#0f5440;
+}
+
+.export-button:active{
+    background-color: #266a57;
+}

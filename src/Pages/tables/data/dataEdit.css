@@ -50,3 +50,9 @@
     background-color: #ffd60a;
     outline: none;
 }
+
+.centred-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

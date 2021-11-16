@@ -46,6 +46,7 @@
 }
 
 .button-show-data{
+    margin: 5px;
     cursor: pointer;
     padding: 10px;
     font-size: 14px;

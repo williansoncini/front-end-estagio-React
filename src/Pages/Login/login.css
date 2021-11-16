@@ -71,6 +71,10 @@
     justify-content: right;
 }
 
+.buttons-center{
+    display:flex;
+    justify-content: center;
+}
 .container{
     display: flex;
     align-items: center;

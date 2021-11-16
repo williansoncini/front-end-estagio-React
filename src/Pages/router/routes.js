@@ -6,8 +6,10 @@ import InputExcel from '../Files/Excel/input/inputExcel';
 import Home from '../home/home'
 import Login from '../Login/login'
 import { AuthContext } from '../providers/authProvider';
+import ReportAcess from '../reports/reportAcess';
 import CreateTable from '../tables/create/createTable';
 import InsertDataOnTable from '../tables/data/insertData';
+import UpdateDataInTable from '../tables/data/updateData';
 import DeleteTable from '../tables/delete/deleteTable';
 import ListTables from '../tables/list/listTables';
 import UpdateTable from '../tables/update/updateTable';
@@ -48,7 +50,9 @@ export default class Routes extends React.Component {
                     <Route exact path='/tables/create'> {this.context.authenticated ? <CreateTable /> : <Login />} </Route>
                     <Route exact path='/tables/update/:id'> {this.context.authenticated ? <UpdateTable /> : <Login />} </Route>
                     <Route exact path='/tables/delete/:id'> {this.context.authenticated ? <DeleteTable /> : <Login />} </Route>
-                    <Route exact path='/tables/:id/data'> {this.context.authenticated ? <InsertDataOnTable /> : <Login />} </Route>
+                    <Route exact path='/tables/:id/data/insert'> {this.context.authenticated ? <InsertDataOnTable /> : <Login />} </Route>
+                    <Route exact path='/tables/:id/data/update'> {this.context.authenticated ? <UpdateDataInTable /> : <Login />} </Route>
+                    <Route exact path='/reports/acess'> {this.context.authenticated ? <ReportAcess /> : <Login />} </Route>
                     <Route path='*'>  {this.context.authenticated ? <h6>Not Found!</h6> : <Login />} </Route>
                 </Switch>
             </>

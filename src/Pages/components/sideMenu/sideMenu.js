@@ -14,7 +14,7 @@ const SideBar = function () {
                     <Icon className='itens-first-bar' icon="carbon:home" color="white" width="36" height="34" id='home' onClick={() => { setSideMenu('home') }} />
                     <Icon className='itens-first-bar' icon="majesticons:file-report-line" color="white" width="36" height="34" onClick={() => { setSideMenu('file') }} />
                     <Icon className='itens-first-bar' icon="carbon:user-filled" color="white" width="36" height="34" onClick={() => { setSideMenu('user') }} />
-                    <Icon className='itens-first-bar' icon="carbon:document" color="white" width="36" height="34" />
+                    <Icon className='itens-first-bar' icon="carbon:document" color="white" width="36" height="34" onClick={() => { setSideMenu('report') }} />
                 </div>
                 <div className='second-bar'>
                     <div className='second-bar-logo'>
@@ -36,7 +36,13 @@ const SideBar = function () {
                             <Link to="/tables" className='second-bar-itens'> Tabelas </Link>
                         </div>
                     )}
-
+                    {sideMenu == 'report' && (
+                        <div className='second-bar-container-itens'>
+                            <Link to="/reports/acess" className='second-bar-itens'> Relatório de direito de acesso </Link>
+                            <Link to="/tables" className='second-bar-itens'> Relatório de opreações feitas no banco de dados </Link>
+                            <Link to="/tables" className='second-bar-itens'> Relatório de arquivos importados  </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </>
