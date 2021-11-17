@@ -21,9 +21,9 @@ export default function ReportAcess() {
 
     function exportReport() {
         let headers = [{
-            label: "Nome", key:'nome',
-            label: "Email", key:'email',
-            label: "Tipo_de_acesso", key:'tipo_acesso'
+            label: "Nome", key: 'nome',
+            label: "Email", key: 'email',
+            label: "Tipo_de_acesso", key: 'tipo_acesso'
         }]
         let data = users.map((user) => {
             return {
@@ -49,9 +49,9 @@ export default function ReportAcess() {
                     <span>Carregando...</span> :
                     <>
                         <div className='right-side-itens'>
-                                <CSVLink data={csvReport} filename='teste.csv' separator={";"} >
-                                    <ExportButton script={exportReport} />
-                                </CSVLink>
+                            <CSVLink data={csvReport} filename='teste.csv' separator={";"} >
+                                <ExportButton script={exportReport} />
+                            </CSVLink>
                         </div>
                         <table className='styled-table'>
                             <thead>
@@ -66,9 +66,11 @@ export default function ReportAcess() {
                                     users.map((user) => {
                                         return (
                                             <>
-                                                <td>{user.nome}</td>
-                                                <td>{user.email}</td>
-                                                <td>{user.tipo_acesso_descricao}</td>
+                                                <tr>
+                                                    <td>{user.nome}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{user.tipo_acesso_descricao}</td>
+                                                </tr>
                                             </>
                                         )
                                     })
