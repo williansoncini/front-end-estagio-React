@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './home.css'
 
-const Home = function(){
-    return(
-        <>
-            <div className='padding-menu'>
-                <div className='home'>
-                    <h1>HOME</h1>
+const Home = function () {
+    // const [user, setUser] = useState('')
 
-                </div>
+    // useEffect()
+    return (
+        <>
+            <div className='content-container'>
+                <h1>Bem vindo! </h1>
             </div>
         </>
     )

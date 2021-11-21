@@ -164,3 +164,26 @@ export async function getDataFromTable(id){
         }
     }
 }
+
+export async function getLogTables(){
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.get(`http://localhost:3000/logs/tables/`, config)
+        console.log(response)
+        return {
+            status: response.status,
+            success: response.success,
+            data: response.data.data
+        }
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}

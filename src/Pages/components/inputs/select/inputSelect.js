@@ -3,7 +3,7 @@ import './inputSelect.css'
 const InputSelect = function ({ register, name, label, list=[], errors, disabled=false }) {
     return (
         <>
-            <div className={errors[name] ? 'input-text-container-error' : 'input-text-container'}>
+            <div className={errors[name] ? 'input-text-container-error-select' : 'input-text-container-select'}>
                 <label for={name}> {label} </label>
                 <select {...register(`${name}`, { required: true, maxLength: 20 })} disabled={disabled}>
                     <option value='' selected="true">Selecione</option>

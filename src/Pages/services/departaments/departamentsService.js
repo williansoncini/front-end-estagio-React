@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { errorToast } from '../../providers/toast/toastProvider'
 import { getTokenFromLocalStorage } from '../auth/authService'
 
 const getDepartaments = async function () {
@@ -17,6 +18,30 @@ const getDepartaments = async function () {
 
 export { getDepartaments }
 
+const getDepartaments_new = async function () {
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.get('http://localhost:3000/departaments/', config)
+        return {
+            status: response.status,
+            success: response.data.success,
+            data: response.data.data
+        }
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data.error
+        }
+    }
+}
+
+export { getDepartaments_new }
+
 const getNamesDepartaments = async function () {
     const departaments = await getDepartaments()
     let nameDepartaments = []
@@ -30,7 +55,9 @@ const getNamesDepartaments = async function () {
 export { getNamesDepartaments }
 
 const getArrayNameAndIdDepartaments = async function () {
-    const departaments = await getDepartaments()
+    const response = await getDepartaments()
+    const departaments = response.data
+
     let nameAndIdDepartaments = []
     for (let i = 0; i < departaments.length; i++) {
         nameAndIdDepartaments.push({
@@ -42,3 +69,102 @@ const getArrayNameAndIdDepartaments = async function () {
 }
 
 export { getArrayNameAndIdDepartaments }
+
+const getDepartament = async function (id) {
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.get(`http://localhost:3000/departaments/${id}`, config)
+        return {
+            status: response.status,
+            success: response.data.success,
+            data: response.data.data
+        }
+    } catch (error) {
+        console.log(error.response)
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}
+export { getDepartament }
+
+const updateDepartament = async function (id, data) {
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.put(`http://localhost:3000/departaments/${id}`, data, config)
+        // console.log(response)
+        return {
+            status: response.status,
+            success: response.data
+        }
+    } catch (error) {
+        console.log(error.response)
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}
+
+export { updateDepartament }
+
+const saveDepartament = async function (data) {
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.post('http://localhost:3000/departaments', data, config)
+        return {
+            status: response.status,
+            success: response.data.success,
+            data: response.data.data
+        }
+    } catch (error) {
+        console.log(error.response)
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}
+
+export { saveDepartament }
+
+const deleteDepartament = async function (id) {
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.delete(`http://localhost:3000/departaments/${id}`, config)
+        console.log(response)
+        return {
+            status: response.status,
+            success: response.data
+        }
+    } catch (error) {
+        console.log(error.response)
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}
+
+export { deleteDepartament }

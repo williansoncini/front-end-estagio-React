@@ -3,7 +3,7 @@ import './inputSelect.css'
 export default function InputSelectGreen ({ register, name, label, list=[], errors, disabled=false }) {
     return (
         <>
-            <div className={errors[name] ? 'input-text-container-error' : 'input-text-container-green-color'}>
+            <div className={errors[name] ? 'input-text-container-error-select' : 'input-text-container-green-color-select'}>
                 <label for={name}> {label} </label>
                 <select {...register(`${name}`, { required: true, maxLength: 20 })} disabled={disabled}>
                     <option value='' selected="true">Selecione</option>

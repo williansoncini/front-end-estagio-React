@@ -37,6 +37,7 @@ export default function UpdateDataInTable() {
 
         if (data == '') {
             const response = await getDataFromTable(id)
+            console.log(response)
             if (response.status == 200) {
                 let rowCount = 0
                 // response.data.map((row) => {
@@ -54,7 +55,7 @@ export default function UpdateDataInTable() {
                         //     name: columnsLoaded[i] + rowCount,
                         //     value: cell
                         // }
-                        console.log(columnsLoaded[i])
+                        // console.log(columnsLoaded[i])
                         return {
                             name: columnsLoaded[i] + rowCount,
                             value: cell
@@ -114,7 +115,7 @@ export default function UpdateDataInTable() {
                             <table className='styled-table'>
                                 <thead>
                                     <tr>
-                                        <td>#</td>
+                                        {/* <td>#</td> */}
                                         {columns.map((column) => {
                                             return (
                                                 <td>

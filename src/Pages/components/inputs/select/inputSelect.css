@@ -1,44 +1,44 @@
-.input-text-container label{
+.input-text-container-select label{
     color: white;
     font-size: 14;
-    width: 120px; 
+    width: 165px; 
     display: inline-block;
     text-align: right;
     margin-right: 5px;
 }
 
-.input-text-container select{
+.input-text-container-select select{
     border-radius: 2px;
     border: solid white 1px;
     font-size: 14;
 }
 
-.input-text-container select:focus{
+.input-text-container-select select:focus{
     outline: none;
 }
 
 /*ERROR PART*/
-.input-text-container-error label{
+.input-text-container-error-select label{
     color: #B91818;
     font-size: 14;
-    width: 120px; 
+    width: 165px; 
     display: inline-block;
     text-align: right;
     margin-right: 5px;
 }
 
-.input-text-container-error select{
+.input-text-container-error-select select{
     border-radius: 2px;
     border: solid #B91818 1px;
     font-size: 14;
     width: 250px;
 }
 
-.input-text-container-error select:focus{
+.input-text-container-error-select select:focus{
     outline: none;
 }
 
-.input-text-container-message-error{
+.input-text-container-message-error-select{
     margin: 5px;
     text-align: center;
     font-size: 12px;

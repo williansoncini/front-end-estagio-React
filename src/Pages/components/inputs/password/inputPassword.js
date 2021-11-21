@@ -3,7 +3,7 @@ import './inputPassword.css'
 const InputPassword = function ({register, name, label, maxLength, errors}){
     return (
         <>
-            <div className={errors[name]? 'input-text-container-error':'input-text-container'}>
+            <div className={errors[name]? 'input-text-container-error-password':'input-text-container-password'}>
                 <label for={name}> {label} </label>
                 <input {...register(`${name}`, {required:true})} type="password" name={name} />
             </div>

@@ -55,6 +55,7 @@ const CreateUser = function () {
                             <InputText register={register} name='email' label='Email*:' maxLength={20} errors={errors} />
                             <InputSelect register={register} name='tipo_acesso_id' label='Acesso*:' errors={errors} list={tipo_acessos} />
                             <InputPassword register={register} name='senha' label='Senha*:' errors={errors} />
+                            <InputPassword register={register} name='confirmaSenha' label='Confirmar senha*:' errors={errors} />
                         </div>
                         <div className='buttons'>
                             <Link to="/users">

@@ -140,7 +140,6 @@ const CreateTable = function () {
                         <div className='create-user-title'>
                             <span> Tabela</span>
                         </div>
-                        <span></span>
                         <div className='itens'>
                             <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} disabled={savedTable != ''? true : false } />
                             <InputSelect register={register} name='categoria_id' label='Categoria*:' errors={errors} list={categorys == '' ? [] : categorys} disabled={savedTable != ''? true : false } />

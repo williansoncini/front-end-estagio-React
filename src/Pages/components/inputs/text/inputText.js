@@ -3,7 +3,7 @@ import './inputText.css'
 const InputText = function ({register, name, label, maxLength, disabled=false, errors}){
     return (
         <>
-            <div className={errors[name]? 'input-text-container-error':'input-text-container'}>
+            <div className={errors[name]? 'input-text-container-error-text':'input-text-container-text'}>
                 <label for={name}> {label} </label>
                 <input {...register(`${name}`, {required:true, maxLength:50, /*pattern:/^[A-Za-z]+$/i*/})} type="text" name={name} disabled={disabled}/>
             </div>

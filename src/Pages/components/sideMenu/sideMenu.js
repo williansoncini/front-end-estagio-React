@@ -28,19 +28,21 @@ const SideBar = function () {
                     {sideMenu == 'user' && (
                         <div className='second-bar-container-itens'>
                             <Link to="/users" className='second-bar-itens'> Usuários </Link>
+                            <Link to="/departaments" className='second-bar-itens'> Departamentos </Link>
                         </div>
                     )}
                     {sideMenu == 'file' && (
                         <div className='second-bar-container-itens'>
                             <Link to="/input/excel" className='second-bar-itens'> Importar arquivo Excel </Link>
                             <Link to="/tables" className='second-bar-itens'> Tabelas </Link>
+                            <Link to="/categorys" className='second-bar-itens'> Categorias </Link>
                         </div>
                     )}
                     {sideMenu == 'report' && (
                         <div className='second-bar-container-itens'>
                             <Link to="/reports/acess" className='second-bar-itens'> Relatório de direito de acesso </Link>
-                            <Link to="/tables" className='second-bar-itens'> Relatório de opreações feitas no banco de dados </Link>
-                            <Link to="/tables" className='second-bar-itens'> Relatório de arquivos importados  </Link>
+                            <Link to="/reports/tables" className='second-bar-itens'> Relatório de operações feitas no banco de dados </Link>
+                            <Link to="/" className='second-bar-itens'> Relatório de arquivos importados  </Link>
                         </div>
                     )}
                 </div>
