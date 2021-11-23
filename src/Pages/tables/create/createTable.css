@@ -57,5 +57,10 @@
 
 .container-remove-columns{
     display: flex;
-    
+}
+
+.message-loading{
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
 }

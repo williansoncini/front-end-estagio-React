@@ -6,7 +6,7 @@ import InputText from "../../components/inputs/text/inputText";
 import InputSelect from "../../components/inputs/select/inputSelect";
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom'
-import { errorToast, loadingToast, successToast, updateToast } from "../../providers/toast/toastProvider";
+import { errorToast, loadingToast, updateToast } from "../../providers/toast/toastProvider";
 import { getCategoryIdAndName } from "../../services/categoria/categoryService";
 import './createTable.css'
 import { Icon } from "@iconify/react";
@@ -22,6 +22,8 @@ const CreateTable = function () {
     const [index, setIndex] = useState(0)
     const [typeColumns, setTypeColumns] = useState('')
     const [savedTable, setSavedTable] = useState('')
+    const [loadingNewColumns, setLoadingNewColumns] = useState(false)
+    const { register, unregister, handleSubmit, formState: { errors }, reset } = useForm()
 
     useEffect(async () => {
         if (categorys == '') {
@@ -46,7 +48,6 @@ const CreateTable = function () {
         }
     })
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm()
     const onSubmit = async (data) => {
         const dataTable = {
             nome: data.nome,
@@ -57,9 +58,8 @@ const CreateTable = function () {
         if (savedTable == '') {
             const id_toast_table = loadingToast('Salvando tabela')
             try {
-                const response = await saveTable(dataTable/*values*/)
+                const response = await saveTable(dataTable)
                 if (response.status == 200) {
-                    // history.push('/tables')
                     updateToast(id_toast_table, 'success', response.success.success)
                     setSavedTable(response.success.data)
                     createdTable = response.success.data
@@ -76,7 +76,6 @@ const CreateTable = function () {
         const vazio_colunas = []
         let key;
         for (key in data) {
-            // console.log(key)
             if (key.includes('name')) {
                 nome_colunas.push(data[key])
             }
@@ -125,6 +124,21 @@ const CreateTable = function () {
         setIndex(index + 1)
     }
 
+    async function handleClickRemoveColumn(index) {
+        let newColumns = components
+        const removedColumn = newColumns.splice(index, 1)
+        setLoadingNewColumns(true)
+        setComponents([])
+        let promise = await new Promise(function (resolve, reject) {
+            setTimeout(() => resolve("done"), 500);
+        });
+        setComponents(newColumns)
+        setLoadingNewColumns(false)
+        unregister(removedColumn.name)
+        unregister(removedColumn.type)
+        unregister(removedColumn.null)
+    }
+
     const vazio = [{ name: 'Sim', value: '1' }, { name: 'Não', value: '0' }]
 
     return (
@@ -145,31 +159,32 @@ const CreateTable = function () {
                         <div className='create-user-title'>
                             <span>Colunas</span>
                         </div>
-                        <div >
-                            {/* <InputText register={register} name='column1' label='Nome*:' errors={errors} /> */}
-                            {components.map((component) => {
-                                return (
-                                    <>
-                                        <div className='container-remove-columns'>
-                                            <div className='white-container-columns'>
-                                                <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
-                                                <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
-                                                <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />
+                        {loadingNewColumns ?
+                            <span className='message-loading'>Carregando</span> :
+                            <div >
+                                {components.map((component, index) => {
+                                    return (
+                                        <>
+                                            <div className='container-remove-columns'>
+                                                <div className='white-container-columns'>
+                                                    <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
+                                                    <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
+                                                    <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />
+                                                </div>
+                                                <div className='delete-row' onClick={() => handleClickRemoveColumn(index)}>
+                                                    <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
+                                                    <span id='teste'>Remover</span>
+                                                </div>
                                             </div>
-                                            <div className='delete-row'>
-                                                <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
-                                                <span id='teste'>Remover</span>
-                                            </div>
-                                        </div>
-                                    </>)
-                            })}
+                                        </>)
+                                })}
+                            </div>
+                        }
 
-                        </div>
                         <button type="button" className='add-column-button' id='add-column-button-teste' onClick={handleClickAddColumn}>
                             <Icon icon="carbon:add-filled" color="#177359" width="50" height="50" />
                             <span> Adicionar nova coluna </span>
                         </button>
-
 
                         <div className='buttons'>
                             <Link to="/users">
@@ -184,11 +199,8 @@ const CreateTable = function () {
                             <SaveButton />
                         </div>
                     </div>
-
-
                 </form>
             </div>
-
         </>
     )
 }
