@@ -75,7 +75,10 @@ export default function InsertDataOnTable() {
 
     const handleChangeInput = (indexRow, indexData, event) => {
         const values = rows
-        values[indexRow][indexData] = event.target.value
+        if (typeof (event.target.value) == String)
+            values[indexRow][indexData] = event.target.value.trim()
+        else
+            values[indexRow][indexData] = event.target.value
         setRows(values)
     }
 

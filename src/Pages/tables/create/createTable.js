@@ -100,7 +100,6 @@ const CreateTable = function () {
             tabela_id: createdTable.id,
             colunas: colunas
         }
-        console.log(columnData)
         const id_toast_column = loadingToast('Salvando colunas')
         try {
             const response = await saveColumns(columnData)
@@ -115,7 +114,7 @@ const CreateTable = function () {
         }
     }
 
-    function handleClick(e) {
+    function handleClickAddColumn(e) {
         setComponents(components.concat(
             [{
                 name: `name ${index}`,
@@ -126,11 +125,7 @@ const CreateTable = function () {
         setIndex(index + 1)
     }
 
-    // const tipo_acessos = [{ name: 'Usuário', value: 1 }, { name: 'Supervisor', value: 2 }, { name: 'Administrador', value: 3 }]
-    // const tipo_coluna = [{ name: 'Inteiro', value: 'INT' }, { name: 'Texto', value: 'VARCHAR' }, { name: 'Número', value: 'DECIMAL' }]
-
     const vazio = [{ name: 'Sim', value: '1' }, { name: 'Não', value: '0' }]
-    // const values_tipo_coluna = 
 
     return (
         <>
@@ -170,7 +165,7 @@ const CreateTable = function () {
                             })}
 
                         </div>
-                        <button type="button" className='add-column-button' id='add-column-button-teste' onClick={handleClick}>
+                        <button type="button" className='add-column-button' id='add-column-button-teste' onClick={handleClickAddColumn}>
                             <Icon icon="carbon:add-filled" color="#177359" width="50" height="50" />
                             <span> Adicionar nova coluna </span>
                         </button>
