@@ -36,7 +36,32 @@ const updateColumns = async function(data){
         console.log(response)
         return {
             status: response.status,
-            success: response.success
+            success: response.data
+        }
+    } catch (error) {
+        // console.log(error.response)
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}
+
+export {updateColumns}
+
+const deleteColumn = async function(id){
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.delete(`http://localhost:3000/columns/${id}`, config)
+        console.log(response)
+        return {
+            status: response.status,
+            success: response.data
         }
     } catch (error) {
         return {
@@ -46,4 +71,4 @@ const updateColumns = async function(data){
     }
 }
 
-export {updateColumns}
+export {deleteColumn}

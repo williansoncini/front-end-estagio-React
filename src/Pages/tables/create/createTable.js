@@ -64,10 +64,10 @@ const CreateTable = function () {
                     setSavedTable(response.success.data)
                     createdTable = response.success.data
                 } else {
-                    updateToast(id_toast_table, 'error', response.error)
+                    return updateToast(id_toast_table, 'error', response.error)
                 }
             } catch {
-                updateToast(id_toast_table, 'error', 'Erro no envio de arquivo')
+                return updateToast(id_toast_table, 'error', 'Erro no envio de arquivo')
             }
         }
 
@@ -150,8 +150,8 @@ const CreateTable = function () {
                             <span> Tabela</span>
                         </div>
                         <div className='itens'>
-                            <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} disabled={savedTable != '' ? true : false} />
-                            <InputSelect register={register} name='categoria_id' label='Categoria*:' errors={errors} list={categorys == '' ? [] : categorys} disabled={savedTable != '' ? true : false} />
+                            <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} readonly={savedTable != '' ? true : false} />
+                            <InputSelect register={register} name='categoria_id' label='Categoria*:' errors={errors} list={categorys == '' ? [] : categorys} readonly={savedTable != '' ? true : false} />
                         </div>
                     </div>
 
@@ -187,7 +187,7 @@ const CreateTable = function () {
                         </button>
 
                         <div className='buttons'>
-                            <Link to="/users">
+                            <Link to="/tables">
                                 <CancelButton script={() => reset({
                                     nome: '',
                                     departamento_id: '',
