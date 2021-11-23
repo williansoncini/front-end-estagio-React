@@ -103,13 +103,13 @@ const CreateTable = function () {
         console.log(columnData)
         const id_toast_column = loadingToast('Salvando colunas')
         try {
-                const response = await saveColumns(columnData)
-                if (response.status == 200) {
-                    history.push('/tables')
-                    updateToast(id_toast_column, 'success', response.success)
-                } else {
-                    updateToast(id_toast_column, 'error', response.error)
-                }
+            const response = await saveColumns(columnData)
+            if (response.status == 200) {
+                history.push('/tables')
+                updateToast(id_toast_column, 'success', response.success)
+            } else {
+                updateToast(id_toast_column, 'error', response.error)
+            }
         } catch {
             updateToast(id_toast_column, 'error', 'Erro no envio de arquivo')
         }
@@ -141,8 +141,8 @@ const CreateTable = function () {
                             <span> Tabela</span>
                         </div>
                         <div className='itens'>
-                            <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} disabled={savedTable != ''? true : false } />
-                            <InputSelect register={register} name='categoria_id' label='Categoria*:' errors={errors} list={categorys == '' ? [] : categorys} disabled={savedTable != ''? true : false } />
+                            <InputText register={register} name='nome' label='Nome*:' maxLength={20} errors={errors} disabled={savedTable != '' ? true : false} />
+                            <InputSelect register={register} name='categoria_id' label='Categoria*:' errors={errors} list={categorys == '' ? [] : categorys} disabled={savedTable != '' ? true : false} />
                         </div>
                     </div>
 
@@ -155,10 +155,16 @@ const CreateTable = function () {
                             {components.map((component) => {
                                 return (
                                     <>
-                                        <div className='white-container-columns'>
-                                            <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
-                                            <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
-                                            <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />
+                                        <div className='container-remove-columns'>
+                                            <div className='white-container-columns'>
+                                                <InputText register={register} name={component.name} label='Nome*: ' errors={errors} />
+                                                <InputSelect register={register} name={component.type} label='Tipo*: ' errors={errors} list={typeColumns == '' ? [] : typeColumns} />
+                                                <InputSelect register={register} name={component.null} label='Vazio?*: ' errors={errors} list={vazio} />
+                                            </div>
+                                            <div className='delete-row'>
+                                                <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
+                                                <span id='teste'>Remover</span>
+                                            </div>
                                         </div>
                                     </>)
                             })}

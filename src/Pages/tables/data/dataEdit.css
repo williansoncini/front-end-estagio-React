@@ -56,3 +56,20 @@
     align-items: center;
     justify-content: center;
 }
+
+.delete-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #b91818;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.delete-row:hover{
+    background-color: darkred;
+}

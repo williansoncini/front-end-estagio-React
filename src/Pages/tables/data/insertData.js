@@ -10,21 +10,17 @@ import SubmitButton from "../../components/button/submitButton/button"
 import Title from "../../components/title/title"
 import { errorToast, loadingToast, updateToast } from "../../providers/toast/toastProvider"
 import { getTableById, insertDataIntoTable } from "../../services/table/tableService"
+// import useForceUpdate from 'use-force-update';
 import './dataEdit.css'
 
 export default function InsertDataOnTable() {
     const { id } = useParams()
     const [rows, setRows] = useState([])
-    // const [index, setIndex] = useState(0)
+    const [updating, setUpdating] = useState(false)
     const [columns, setColumns] = useState('')
     const { register, control, handleSubmit, formState: { errors }, reset, setValue } = useForm()
-    // const { fields, append, remove } = useFieldArray({
-    //     control,
-    //     name: "teste",
-    // })
     const history = useHistory()
     const [loading, setLoading] = useState(true)
-    // const [indexRow, setIndexRow] = useState(0)
 
     useEffect(async () => {
         if (columns == '') {
@@ -41,68 +37,40 @@ export default function InsertDataOnTable() {
     }, [])
 
     useEffect(() => {
-        // console.log(rows)
     }, [rows])
 
     function addColumn() {
-        // const rowLength = rows.length
         const values = columns.map((column) => {
-            // return `${column.nome}${rowLength}`
             return ''
         })
         setRows(rows.concat([values]))
     }
 
-    // const onSubmit = async function (data) {
-    //     const values = rows.map((row) => {
-    //         return row.map((datas) => {
-    //             return data[datas]
-    //         })
-    //     })
-
-    //     const id_toast = loadingToast('Carregando')
-    //     try {
-    //         const response = await insertDataIntoTable(id, values)
-    //         console.log(response)
-    //         if (response.status == 200) {
-    //             updateToast(id_toast, 'success', response.success)
-    //             history.push(`/tables/update/${id}`)
-    //         } else
-    //             updateToast(id_toast, 'error', response.error)
-    //     } catch (error) {
-    //         updateToast(id_toast, 'error', 'Erro no processo de criar tabela')
-    //     }
-    // }
-    const onSubmit = async function () {
-        console.log(rows)
+    const onSubmit = async function (data) {
+        const id_toast = loadingToast('Carregando')
+        try {
+            const response = await insertDataIntoTable(id, rows)
+            console.log(response)
+            if (response.status == 200) {
+                updateToast(id_toast, 'success', response.success)
+                history.push(`/tables/update/${id}`)
+            } else
+                updateToast(id_toast, 'error', response.error)
+        } catch (error) {
+            updateToast(id_toast, 'error', 'Erro no processo de criar tabela')
+        }
     }
 
-    const handleRemoveRow = (index) => {
-        console.log(index)
-        var rowsHandler = rows
-        // rowsHandler.splice(index,1)
-        // const newArray = rowsHandler
-        // setRows(newArray)
-
-        // let rowsHandler = rows
-        // const index = rowsHandler.indexOf(row);
-        // if (index > -1) {
-        //     rowsHandler.splice(index, 1);
-        //     setRows(rowsHandler)
-        // }
-        // console.log(rowsHandler)
-
-
-        const newarray = rowsHandler.filter((row,i) => i !== index)
+    const handleRemoveRow = async (index) => {
+        var rowsHandler = [...rows]
+        const newarray = rowsHandler.filter((row, i) => i !== index)
         setRows([])
-        setRows(newarray)
-        // const newarray = rowsHandler.filter((value,i) => value[0] !== rows[index][0] && value[1] !== rows[index][1])
-        // const newarray = rowsHandler.slice(index, index+1)
-        // console.log(newarray)
-        // setRows(newarray)
-        // setRows(rowsHandler)
-        // console.log(rows)
-        // console.log(rowsHandler)
+        setUpdating(true)
+        let promise = await new Promise(function (resolve, reject) {
+            setTimeout(() => resolve("done"), 500);
+        });
+        setUpdating(false)
+        setRows(newarray);
     }
 
     const handleChangeInput = (indexRow, indexData, event) => {
@@ -116,24 +84,10 @@ export default function InsertDataOnTable() {
             <div className='content-container'>
                 <Title text='Adicionar dados' />
                 {loading ?
-                    <span>Carregando...</span> :
+                    <span>Atualizando...</span> :
                     (
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {/* {columns.map((column) => {
-                                return <> {column.nome} </>
-                            })}
-
-                            {rows.map((row, indexRow) => {
-                                return (
-                                    <div key={indexRow}>
-                                        <span onClick={event => handleRemoveRow(indexRow)}> Remover </span>
-                                        {
-                                            row.map((data, indexData) => {
-                                                return <> <input type="text" onChange={event => handleChangeInput(indexRow, indexData, event)} /> </>
-                                            })}
-                                    </div>)
-                            })} */}
-                            <table className='styled-table'>
+                            <table className='styled-table' id='table-data'>
                                 <thead>
                                     <tr>
                                         <td>Ações</td>
@@ -147,28 +101,34 @@ export default function InsertDataOnTable() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {rows.map((row, indexRow) => {
-                                        return <tr >
-                                            <td onClick={() => handleRemoveRow(indexRow)}>
-                                                <Icon icon="dashicons:remove" color="#b91818" width="25" height="25" />
-                                                <span id='teste'>Remover</span>
-                                            </td>
-                                            {
-                                                row.map((data, indexData) => {
-                                                    console.log(data)
-                                                    return (
-                                                        <td>
-                                                            {/* <input type="text" className='input-data-table' {...register(`${data}`)} /> */}
-                                                            <input type="text" className='input-data-table' onChange={event => handleChangeInput(indexRow, indexData, event)} defaultValue={data || 'teste'} />
-                                                        </td>
-                                                    )
-                                                })}
-                                        </tr>
-                                    })}
+                                    {
+                                        updating ?
+                                            <span>Carregando</span> :
+                                            rows.map((row, indexRow) => {
+                                                return (
+                                                    <>
+                                                        <tr key={indexRow}>
+                                                            <td onClick={() => handleRemoveRow(indexRow)}>
+                                                                <div className='delete-row'>
+                                                                    <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
+                                                                    <span id='teste'>Remover</span>
+                                                                </div>
+                                                            </td>
+                                                            {
+                                                                row.map((data, indexData) => {
+                                                                    return (
+                                                                        <td>
+                                                                            <input type="text" className='input-data-table' onChange={event => handleChangeInput(indexRow, indexData, event)} defaultValue={data || ''} />
+                                                                        </td>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tr>
+                                                    </>
+                                                )
+                                            })}
                                 </tbody>
                             </table>
-
-                            {/* <button type='button' onClick={() => append({})}>Append</button> */}
 
                             <div className='centred-container'>
                                 <button type='button' className='add-column-button-green' onClick={addColumn}>
