@@ -51,6 +51,14 @@
     outline: none;
 }
 
+.input-data-table-insert{
+    width: 100%;
+    border: solid 1px #03a66a;
+    background-color: #03a66a;
+    color: white;
+    outline: none;
+}
+
 .centred-container{
     display: flex;
     align-items: center;

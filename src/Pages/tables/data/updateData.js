@@ -22,6 +22,7 @@ export default function UpdateDataInTable() {
     const [data, setData] = useState([])
     const [loadingNewColumnsComponents, setLoadingNewColumnsComponents] = useState(false)
     const [loadingNewColumnsFromDatabase, setLoadingNewColumnsFromDatabase] = useState(false)
+    const [newRowsForInsert, setNewRowsForInsert] = useState([])
     // const [updateRows, setUpdateRows] = useState([])
 
     useEffect(async () => {
@@ -51,11 +52,10 @@ export default function UpdateDataInTable() {
     }, [rows])
 
     function addColumn() {
-        const values = columns.map((column) => {
-            return `${column.nome}${index}`
-        })
-        setIndex(index + 1)
-        setRows(rows.concat([values]))
+        const columnsArray = [columns.map((column) => {
+            return []
+        })]
+        setNewRowsForInsert(newRowsForInsert.concat(columnsArray))
     }
 
     const onSubmit = async function (data) {
@@ -71,16 +71,53 @@ export default function UpdateDataInTable() {
         })
 
         try {
-            const response = await updateDataFromTable(id, updateRows)
-            if (response.status == 200) {
-                return successToast(response.success)
-            } else {
-                errorToast(response.error)
+            if (updateRows.length !== 0) {
+                const response = await updateDataFromTable(id, updateRows)
+                if (response.status == 200) {
+                    successToast(response.success)
+                    const responseGetTable = await getDataFromTable(id)
+                    if (responseGetTable.status == 200) {
+                        setRows([])
+                        setNewRowsForInsert([])
+                        setLoadingNewColumnsFromDatabase(true)
+                        let promise = await new Promise(function (resolve, reject) {
+                            setTimeout(() => resolve("done"), 300);
+                        });
+                        setRows(responseGetTable.data)
+                        setLoadingNewColumnsFromDatabase(false)
+                    }
+                } else {
+                    errorToast(response.error)
+                }
             }
         } catch (error) {
             errorToast('Erro ao alterar dados da tabela')
         }
 
+        if (newRowsForInsert.length !== 0) {
+            const id_toast = loadingToast('Carregando')
+            try {
+                const response = await insertDataIntoTable(id, newRowsForInsert)
+                if (response.status == 200) {
+                    updateToast(id_toast, 'success', response.success)
+                    const responseGetTable = await getDataFromTable(id)
+                    if (responseGetTable.status == 200) {
+                        setRows([])
+                        setNewRowsForInsert([])
+                        setLoadingNewColumnsFromDatabase(true)
+                        let promise = await new Promise(function (resolve, reject) {
+                            setTimeout(() => resolve("done"), 300);
+                        });
+                        setRows(responseGetTable.data)
+                        setLoadingNewColumnsFromDatabase(false)
+                    }
+                    // history.push(`/tables/update/${id}`)
+                } else
+                    updateToast(id_toast, 'error', response.error)
+            } catch (error) {
+                updateToast(id_toast, 'error', 'Erro no processo de criar tabela')
+            }
+        }
     }
 
     async function removeColumnFromDataBase(index) {
@@ -97,19 +134,15 @@ export default function UpdateDataInTable() {
                     console.log(`${index}.${indexData}`)
                     unregister(`${index}.${indexData}`)
                 })
-                // removedRow[0].map((data, indexData) => {
-                //     console.log(`${index}.${indexData}`)
-                //     unregister(`${index}.${indexData}`)
-                // })
 
                 setRows([])
                 setLoadingNewColumnsFromDatabase(true)
                 let promise = await new Promise(function (resolve, reject) {
-                    setTimeout(() => resolve("done"), 1000);
+                    setTimeout(() => resolve("done"), 300);
                 });
                 setRows(newRows)
-                newRows.map((row, rowIndex)=> {
-                    row.map((data, dataindex)=>{
+                newRows.map((row, rowIndex) => {
+                    row.map((data, dataindex) => {
                         setValue(`${rowIndex}.${dataindex}`, data)
                     })
                 })
@@ -124,6 +157,18 @@ export default function UpdateDataInTable() {
         }
     }
 
+    async function removeColumnFromInsertArray(index) {
+        let newArray = newRowsForInsert
+        const removedRow = newArray.splice(index, 1)
+        setNewRowsForInsert([])
+        setLoadingNewColumnsComponents(true)
+        let promise = await new Promise(function (resolve, reject) {
+            setTimeout(() => resolve("done"), 300);
+        });
+        setNewRowsForInsert(newArray)
+        setLoadingNewColumnsComponents(false)
+    }
+
     function changeColorToYellow(event, indexRow, indexData) {
         const cell = event.target
         const data = String(rows[indexRow][indexData])
@@ -132,6 +177,15 @@ export default function UpdateDataInTable() {
         } else {
             cell.style.backgroundColor = 'white'
         }
+    }
+
+    const handleChangeInput = (indexRow, indexData, event) => {
+        const values = newRowsForInsert
+        if (typeof (event.target.value) == String)
+            values[indexRow][indexData] = event.target.value.trim()
+        else
+            values[indexRow][indexData] = event.target.value
+        setNewRowsForInsert(values)
     }
 
     return (
@@ -159,38 +213,66 @@ export default function UpdateDataInTable() {
                                     {
                                         loadingNewColumnsFromDatabase || loadingNewColumnsComponents ?
                                             (<span>Atualizando...</span>) : (
-                                                rows.map((row, indexRow) => {
-                                                    return (
-                                                        <tr>
-                                                            <td onClick={() => removeColumnFromDataBase(indexRow)}>
-                                                                <div className='delete-row'>
-                                                                    <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
-                                                                    <span id='teste'>Remover</span>
-                                                                </div>
-                                                            </td>
-                                                            {
-                                                                row.map((data_teste, indexData) => {
-                                                                    // console.log(`${indexRow}.${indexData}`)
-                                                                    return (
-                                                                        <td>
-                                                                            {
-                                                                                // <input type="text" className='input-data-table' defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
-                                                                                <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data_teste || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
-                                                                                // indexData == 0 ?
-                                                                                //     <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} readOnly='true' />
-                                                                                //     :
-                                                                                //     typeof (data) === 'string' ?
-                                                                                //         <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
-                                                                                //         :
-                                                                                //         <input type="number" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
-                                                                            }
-                                                                        </td>
-                                                                    )
-                                                                })}
-                                                        </tr>
-                                                    )
+                                                <>
+                                                    {
+                                                        rows.map((row, indexRow) => {
+                                                            return (
+                                                                <tr>
+                                                                    <td onClick={() => removeColumnFromDataBase(indexRow)}>
+                                                                        <div className='delete-row'>
+                                                                            <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
+                                                                            <span id='teste'>Remover</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    {
+                                                                        row.map((data_teste, indexData) => {
+                                                                            // console.log(`${indexRow}.${indexData}`)
+                                                                            return (
+                                                                                <td>
+                                                                                    {
+                                                                                        // <input type="text" className='input-data-table' defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                        // <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data_teste || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                        indexData == 0 ?
+                                                                                            <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data_teste || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} readOnly='true' />
+                                                                                            :
+                                                                                            typeof (data_teste) === 'string' ?
+                                                                                                <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data_teste || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                                :
+                                                                                                <input type="number" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data_teste} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                    }
+                                                                                </td>
+                                                                            )
+                                                                        })}
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
 
-                                                })
+                                                    {
+                                                        newRowsForInsert.map((row, indexRow) => {
+                                                            return (
+                                                                <>
+                                                                    <tr>
+                                                                        <td onClick={() => removeColumnFromInsertArray(indexRow)}>
+                                                                            <div className='delete-row'>
+                                                                                <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
+                                                                                <span id='teste'>Remover</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        {
+                                                                            row.map((data, indexData) => {
+                                                                                return (
+                                                                                    <td>
+                                                                                        <input type="text" className='input-data-table-insert' defaultValue={data || ''} onChange={event => handleChangeInput(indexRow, indexData, event)} />
+                                                                                    </td>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </tr>
+                                                                </>)
+                                                        })
+                                                    }
+                                                </>
                                             )
                                     }
                                 </tbody>
