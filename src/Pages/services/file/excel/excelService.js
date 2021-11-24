@@ -15,6 +15,7 @@ const importExcelOnServer = async function (file) {
 
         let response = {}
         response = await axios.post(`http://localhost:3000/upload/excel`, formData, config)
+        console.log(response)
         // console.log('Soninha!')
         return {
             status: response.status,
@@ -43,6 +44,7 @@ export async function importFileWithCreateTable(data) {
         
         let response = {}
         response = await axios.post(`http://localhost:3000/import/create`, data, config)
+        console.log(response)
 
         // console.log('Soninha!')
         return {

@@ -57,6 +57,7 @@ const InputExcel = function () {
         const id = loadingToast('Carregando')
         try {
             const response = await importExcelOnServer(data.excelFile[0])
+            
             if (response.status == 200) {
                 // console.log(response.data)
                 setData(response.data.data)

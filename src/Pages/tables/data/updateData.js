@@ -169,13 +169,13 @@ export default function UpdateDataInTable() {
                                                                 </div>
                                                             </td>
                                                             {
-                                                                row.map((data, indexData) => {
+                                                                row.map((data_teste, indexData) => {
                                                                     // console.log(`${indexRow}.${indexData}`)
                                                                     return (
                                                                         <td>
                                                                             {
                                                                                 // <input type="text" className='input-data-table' defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
-                                                                                <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data_teste || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
                                                                                 // indexData == 0 ?
                                                                                 //     <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} readOnly='true' />
                                                                                 //     :
