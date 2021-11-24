@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useHistory } from 'react-router'
 
 const SingIn = async function(email, password){
     const config = {
@@ -30,4 +31,12 @@ const getTokenFromLocalStorage = function(){
     return token
 }
 
+const getUserFromLocalStorage = function(){
+    return JSON.parse(localStorage.getItem('user'))
+}
+
 export {getTokenFromLocalStorage}
+
+export function destroyUserFromLocalStorage(){
+    return localStorage.removeItem('user')
+}   

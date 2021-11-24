@@ -3,9 +3,21 @@ import { Icon } from '@iconify/react'
 import Logo from '../logo/logo';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import { destroyUserFromLocalStorage } from '../../services/auth/authService';
+import { useContext } from 'react';
+import { AuthContext } from '../../providers/authProvider';
+import { successToast } from '../../providers/toast/toastProvider';
 
 const SideBar = function () {
     const [sideMenu, setSideMenu] = useState("home")
+    const authContext = useContext(AuthContext)
+
+    function logout(){
+        destroyUserFromLocalStorage()
+        authContext.setAuthenticated(false)
+        successToast('Logout efetuado com successo!')
+    }
+
     return (
         <>
 
@@ -15,6 +27,7 @@ const SideBar = function () {
                     <Icon className='itens-first-bar' icon="majesticons:file-report-line" color="white" width="36" height="34" onClick={() => { setSideMenu('file') }} />
                     <Icon className='itens-first-bar' icon="carbon:user-filled" color="white" width="36" height="34" onClick={() => { setSideMenu('user') }} />
                     <Icon className='itens-first-bar' icon="carbon:document" color="white" width="36" height="34" onClick={() => { setSideMenu('report') }} />
+                    <Icon className='itens-first-bar' icon="ri:logout-box-fill" color="white" width="36" height="34" onClick={() => { logout()}}/>
                 </div>
                 <div className='second-bar'>
                     <div className='second-bar-logo'>
