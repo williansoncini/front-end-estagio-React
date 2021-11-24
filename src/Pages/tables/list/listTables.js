@@ -32,10 +32,7 @@ export default class ListTables extends React.Component {
                     <div className='header'>
                         <Title text='Lista de tabelas' />
                         <div className='buttons-container'>
-                            <button className='button filter-button'>
-                                <span>Filtro</span>
-                                <Icon icon="ant-design:filter-filled" color="black" width="36" height="34" />
-                            </button>
+                            
                             <Link to="/tables/create">
                                 <button className='button add-button'>
                                     <span>Adicionar</span>

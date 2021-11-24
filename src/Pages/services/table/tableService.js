@@ -187,3 +187,47 @@ export async function getLogTables(){
         }
     }
 }
+
+export async function deleteRowFromTable(tableId, rowId){
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.delete(`http://localhost:3000/tables/${tableId}/data/${rowId}`, config)
+        console.log(response)
+        return {
+            status: response.status,
+            success: response.data
+        }
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}
+
+export async function updateDataFromTable (tableId, data){
+    let token = getTokenFromLocalStorage()
+    const config = {
+        headers: { "Authorization": `Bearer ${token}` }
+    };
+
+    let response = {}
+    try {
+        response = await axios.put(`http://localhost:3000/tables/${tableId}/data/`,data, config)
+        console.log(response)
+        return {
+            status: response.status,
+            success: response.data
+        }
+    } catch (error) {
+        return {
+            status: error.response.status,
+            error: error.response.data
+        }
+    }
+}

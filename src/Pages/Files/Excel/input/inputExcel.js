@@ -166,7 +166,6 @@ const InputExcel = function () {
                                     <div>
                                         <label for="checkbox"> Criar tabela automaticamente? </label>
                                         <input type="checkbox" checked={createTable} class='custon-checkbox' onChangeCapture={handleChangeCheck} />
-                                        <span> {createTable.toString()} </span>
                                     </div>
                                     {createTable ?
                                         <>

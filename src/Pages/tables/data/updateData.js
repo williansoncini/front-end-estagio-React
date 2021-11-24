@@ -6,8 +6,9 @@ import { Link } from "react-router-dom"
 import RedCancelButton from "../../components/button/redCancelButton/redCancelButton"
 import SubmitButton from "../../components/button/submitButton/button"
 import Title from "../../components/title/title"
-import { errorToast, loadingToast, updateToast } from "../../providers/toast/toastProvider"
-import { getDataFromTable, getTableById, insertDataIntoTable } from "../../services/table/tableService"
+import { errorToast, loadingToast, successToast, updateToast } from "../../providers/toast/toastProvider"
+import { deleteColumn } from "../../services/columnService/columnService"
+import { deleteRowFromTable, getDataFromTable, getTableById, insertDataIntoTable, updateDataFromTable } from "../../services/table/tableService"
 import './dataEdit.css'
 
 export default function UpdateDataInTable() {
@@ -15,10 +16,13 @@ export default function UpdateDataInTable() {
     const [rows, setRows] = useState([])
     const [index, setIndex] = useState(0)
     const [columns, setColumns] = useState([])
-    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm()
+    const { register, unregister, handleSubmit, formState: { errors }, reset, setValue } = useForm()
     const history = useHistory()
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
+    const [loadingNewColumnsComponents, setLoadingNewColumnsComponents] = useState(false)
+    const [loadingNewColumnsFromDatabase, setLoadingNewColumnsFromDatabase] = useState(false)
+    // const [updateRows, setUpdateRows] = useState([])
 
     useEffect(async () => {
         let columnsLoaded = []
@@ -37,41 +41,14 @@ export default function UpdateDataInTable() {
 
         if (data == '') {
             const response = await getDataFromTable(id)
-            console.log(response)
             if (response.status == 200) {
-                let rowCount = 0
-                // response.data.map((row) => {
-                //     rowCount++
-                //     return row.map((cell, i) => {
-                //         console.log(cell)
-                //     })
-                // })
-
-                const rowsData = response.data.map((row) => {
-                    rowCount++
-                    return row.map((cell, i) => {
-                        // setValue(columnsLoaded[i] + rowCount, cell)
-                        // return {
-                        //     name: columnsLoaded[i] + rowCount,
-                        //     value: cell
-                        // }
-                        // console.log(columnsLoaded[i])
-                        return {
-                            name: columnsLoaded[i] + rowCount,
-                            value: cell
-                        }
-                    })
-                })
-                setIndex(rowCount + 1)
-                setRows(rowsData)
-            }
-            else {
-                errorToast(response.error)
-                history.push('/tables')
-                setData([])
+                setRows(response.data)
             }
         }
     }, [])
+
+    useEffect(() => {
+    }, [rows])
 
     function addColumn() {
         const values = columns.map((column) => {
@@ -82,26 +59,79 @@ export default function UpdateDataInTable() {
     }
 
     const onSubmit = async function (data) {
-        const values = rows.map((row) => {
-            return row.map((datas) => {
-                return data[datas.name]
+        let updateRows = []
+        rows.map((row, indexRow) => {
+            row.map((cell, indexCell) => {
+                if (data[indexRow][indexCell] !== String(cell)) {
+                    console.log(data[indexRow][indexCell])
+                    if (!updateRows.includes(data[indexRow]))
+                        return updateRows.push(data[indexRow])
+                }
             })
         })
 
-        console.log(values)
+        try {
+            const response = await updateDataFromTable(id, updateRows)
+            if (response.status == 200) {
+                return successToast(response.success)
+            } else {
+                errorToast(response.error)
+            }
+        } catch (error) {
+            errorToast('Erro ao alterar dados da tabela')
+        }
 
-        // const id_toast = loadingToast('Carregando')
-        // try {
-        //     const response = await insertDataIntoTable(id, values)
-        //     console.log(response)
-        //     if (response.status == 200) {
-        //         updateToast(id_toast, 'success', response.success)
-        //         history.push(`/tables/update/${id}`)
-        //     } else
-        //         updateToast(id_toast, 'error', response.error)
-        // } catch (error) {
-        //     updateToast(id_toast, 'error', 'Erro no processo de criar tabela')
-        // }
+    }
+
+    async function removeColumnFromDataBase(index) {
+        try {
+            console.log(index)
+            console.log(rows[index][0])
+            const rowId = rows[index][0]
+            const response = await deleteRowFromTable(id, rowId)
+            if (response.status == 200) {
+                let newRows = rows
+                const removedRow = newRows.splice(index, 1)
+                console.log(removedRow)
+                rows[index].map((data, indexData) => {
+                    console.log(`${index}.${indexData}`)
+                    unregister(`${index}.${indexData}`)
+                })
+                // removedRow[0].map((data, indexData) => {
+                //     console.log(`${index}.${indexData}`)
+                //     unregister(`${index}.${indexData}`)
+                // })
+
+                setRows([])
+                setLoadingNewColumnsFromDatabase(true)
+                let promise = await new Promise(function (resolve, reject) {
+                    setTimeout(() => resolve("done"), 1000);
+                });
+                setRows(newRows)
+                newRows.map((row, rowIndex)=> {
+                    row.map((data, dataindex)=>{
+                        setValue(`${rowIndex}.${dataindex}`, data)
+                    })
+                })
+                setLoadingNewColumnsFromDatabase(false)
+
+                successToast(response.success)
+            } else {
+                errorToast(response.error)
+            }
+        } catch (error) {
+            errorToast('Não foi possível deletar a linha')
+        }
+    }
+
+    function changeColorToYellow(event, indexRow, indexData) {
+        const cell = event.target
+        const data = String(rows[indexRow][indexData])
+        if (cell.value !== data) {
+            cell.style.backgroundColor = '#ffd60a'
+        } else {
+            cell.style.backgroundColor = 'white'
+        }
     }
 
     return (
@@ -115,7 +145,7 @@ export default function UpdateDataInTable() {
                             <table className='styled-table'>
                                 <thead>
                                     <tr>
-                                        {/* <td>#</td> */}
+                                        <td>Ações</td>
                                         {columns.map((column) => {
                                             return (
                                                 <td>
@@ -127,17 +157,41 @@ export default function UpdateDataInTable() {
                                 </thead>
                                 <tbody>
                                     {
-                                        rows.map((row) => {
-                                            return <tr>{
-                                                row.map((data) => {
+                                        loadingNewColumnsFromDatabase || loadingNewColumnsComponents ?
+                                            (<span>Atualizando...</span>) : (
+                                                rows.map((row, indexRow) => {
                                                     return (
-                                                        <td>
-                                                            <input type="text" className='input-data-table' {...register(`${data}`)} />
-                                                        </td>
+                                                        <tr>
+                                                            <td onClick={() => removeColumnFromDataBase(indexRow)}>
+                                                                <div className='delete-row'>
+                                                                    <Icon icon="dashicons:remove" color="#fff" width="25" height="25" />
+                                                                    <span id='teste'>Remover</span>
+                                                                </div>
+                                                            </td>
+                                                            {
+                                                                row.map((data, indexData) => {
+                                                                    // console.log(`${indexRow}.${indexData}`)
+                                                                    return (
+                                                                        <td>
+                                                                            {
+                                                                                // <input type="text" className='input-data-table' defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                // indexData == 0 ?
+                                                                                //     <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} readOnly='true' />
+                                                                                //     :
+                                                                                //     typeof (data) === 'string' ?
+                                                                                //         <input type="text" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                                //         :
+                                                                                //         <input type="number" className='input-data-table' {...register(`${indexRow}.${indexData}`)} defaultValue={data || ''} onChange={e => changeColorToYellow(e, indexRow, indexData)} />
+                                                                            }
+                                                                        </td>
+                                                                    )
+                                                                })}
+                                                        </tr>
                                                     )
-                                                })}
-                                            </tr>
-                                        })
+
+                                                })
+                                            )
                                     }
                                 </tbody>
                             </table>
